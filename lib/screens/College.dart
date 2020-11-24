@@ -1,26 +1,20 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collegesection/Money/MoneyMatters.dart';
-import 'package:collegesection/models/user.dart';
-import 'package:collegesection/screens/Notification.dart';
-import 'package:collegesection/screens/Preferences.dart';
-import 'package:collegesection/screens/activities/activities_home.dart';
-import 'package:collegesection/screens/college_section_page.dart';
-import 'package:collegesection/screens/events/events_home.dart';
-import 'package:collegesection/screens/growth/growth_home.dart';
-import 'package:collegesection/screens/growth/my_resume.dart';
-import 'package:collegesection/screens/mapscreens/Experiment_map.dart';
-import 'package:collegesection/screens/mapscreens/Vibe_map.dart';
-import 'package:collegesection/screens/mapscreens/filtering_users.dart';
-import 'package:collegesection/services/auth.dart';
-import 'package:collegesection/services/banner_database.dart';
-import 'package:collegesection/services/userdatabase.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
+
+import '../Money/MoneyMatters.dart';
+import '../models/user.dart';
+import '../services/banner_database.dart';
+import '../services/userdatabase.dart';
+import 'Notification.dart';
+import 'Preferences.dart';
+import 'college_section_page.dart';
+import 'message/Message.dart';
 
 class College extends StatefulWidget {
   @override
@@ -108,7 +102,7 @@ final height = MediaQuery.of(context).size.height;
                         onTap: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                           // return Messages();
+                            return Messages();
                           }));
                         },
                         child: Icon(Icons.send, color: Colors.black, size: 28)),
