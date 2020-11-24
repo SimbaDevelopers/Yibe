@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\alenj\\Desktop\\New folder (2)(1)\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-af\\values-af.xml",
+            "outputFile": "D:\\Personal\\Personal\\Projects\\yibe\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-af\\values-af.xml",
             "map": [
                 {
                     "source": "C:\\Users\\alenj\\.gradle\\caches\\transforms-2\\files-2.1\\12b2a981af48a4d34665a895e1a50203\\play-services-base-17.1.0\\res\\values-af\\values.xml",

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\alenj\\Desktop\\New folder (2)(1)\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-es-rUS\\values-es-rUS.xml",
+            "outputFile": "D:\\Personal\\Personal\\Projects\\yibe\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-es-rUS\\values-es-rUS.xml",
             "map": [
                 {
                     "source": "C:\\Users\\alenj\\.gradle\\caches\\transforms-2\\files-2.1\\28862f3d92b6f52ef3e91a1d153ab07e\\jetified-play-services-basement-17.1.0\\res\\values-es-rUS\\values.xml",
