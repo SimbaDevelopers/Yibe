@@ -158,6 +158,12 @@
       "languageVersion": "2.10"
     },
     {
+      "name": "flutter_plugin_android_lifecycle",
+      "rootUri": "file:///D:/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.11",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
       "name": "flutter_qr_bar_scanner",
       "rootUri": "file:///C:/src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_qr_bar_scanner-1.0.2",
       "packageUri": "lib/",
@@ -192,6 +198,18 @@
       "rootUri": "file:///C:/src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-3.1.4",
       "packageUri": "lib/",
       "languageVersion": "2.3"
+    },
+    {
+      "name": "image_picker",
+      "rootUri": "file:///D:/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.6.7+14",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
+      "name": "image_picker_platform_interface",
+      "rootUri": "file:///D:/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker_platform_interface-1.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.5"
     },
     {
       "name": "intl",
