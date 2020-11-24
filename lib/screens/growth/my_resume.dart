@@ -30,7 +30,7 @@ class _MyResumeState extends State<MyResume> {
     super.initState();
     GrowthDatabaseService(uid: widget.uid).checkIfUserCreatedResume().then((value) => setState((){
         didCreated = true;
-        details = value;
+    //    details = value;
         fname.text = details['fname'];
         lname.text = details['lname'];
         phoneNumber.text = details['phoneNumber'];

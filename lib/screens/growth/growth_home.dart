@@ -171,8 +171,10 @@ class _GrowthHomeState extends State<GrowthHome> {
   }
 
   Widget internshipsStream(){
-    return StreamBuilder(
-        stream: GrowthDatabaseService(uid: widget.uid).getInternships(),
+    return 
+    true?Container():
+    StreamBuilder(
+       // stream: GrowthDatabaseService(uid: widget.uid).getInternships(),
         builder: (context, snapshot) {
           //print(snapshot.data != null ? snapshot.data : 'Null');
           if (snapshot.hasData) {
@@ -317,9 +319,9 @@ class _GrowthHomeState extends State<GrowthHome> {
   }
 
   Widget quickFixStream(){
-    return StreamBuilder(
-        stream: GrowthDatabaseService(uid: widget.uid)
-            .getQuickFixes(),
+    return true?Container() : StreamBuilder(
+      //  stream: GrowthDatabaseService(uid: widget.uid)
+           // .getQuickFixes(),
         builder: (context, snapshot) {
           //print(snapshot.data != null ? snapshot.data : 'Null');
           if (snapshot.hasData) {
@@ -428,8 +430,11 @@ class _GrowthHomeState extends State<GrowthHome> {
   }
 
   Widget projectStream(){
-    return StreamBuilder(
-        stream: GrowthDatabaseService(uid: widget.uid).getProjects(),
+    return
+    
+    true?Container():
+     StreamBuilder(
+       // stream: GrowthDatabaseService(uid: widget.uid).getProjects(),
         builder: (context, snapshot) {
           //print(snapshot.data != null ? snapshot.data : 'Null');
           if (snapshot.hasData) {

@@ -56,7 +56,7 @@ class _GrowthDisplayState extends State<GrowthDisplay> {
                         color: Colors.green,
                         onPressed: () {
                           GrowthDatabaseService(uid: widget.uid).checkIfUserCreatedResume().then((value){
-                            widget.growthType=='Internship' ? GrowthDatabaseService(uid: widget.uid).sendResumeDetailsToRecruiterForinternship(value, widget.Details.data()['id']) : widget.growthType=='QuickFix' ? GrowthDatabaseService(uid: widget.uid).sendResumeDetailsToRecruiterForQuickFix(value, widget.Details.data()['id']) : GrowthDatabaseService(uid: widget.uid).sendResumeDetailsToRecruiterForProject(value, widget.Details.data()['id']);
+             //               widget.growthType=='Internship' ? GrowthDatabaseService(uid: widget.uid).sendResumeDetailsToRecruiterForinternship(value, widget.Details.data()['id']) : widget.growthType=='QuickFix' ? GrowthDatabaseService(uid: widget.uid).sendResumeDetailsToRecruiterForQuickFix(value, widget.Details.data()['id']) : GrowthDatabaseService(uid: widget.uid).sendResumeDetailsToRecruiterForProject(value, widget.Details.data()['id']);
                           });
                          Navigator.pop(context);
                           scaffoldKey.currentState.showSnackBar(SnackBar(

@@ -1,7 +1,8 @@
 import 'package:collegesection/models/user.dart';
+import 'package:collegesection/screens/PageHandler.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import 'screens/home.dart';
+import 'screens/College.dart';
 import 'screens/authenicate/auth_screen.dart';
 
 class Wrapper extends StatelessWidget {
@@ -11,7 +12,7 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return AuthScreen();
     } else {
-      return Home();
+      return PageHandler();
     }
   }
 }
