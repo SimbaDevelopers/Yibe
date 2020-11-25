@@ -1,13 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:yibe_final_ui/pages/Money.dart';
-import 'package:yibe_final_ui/pages/Notification.dart';
+import 'package:yibe_final_ui/helper/Constants.dart';
 import 'package:yibe_final_ui/pages/Message.dart';
+import 'package:yibe_final_ui/pages/Money/MoneyMatters.dart';
+import 'package:yibe_final_ui/pages/Notification.dart';
 import 'package:yibe_final_ui/pages/college_section_page.dart';
-import 'Preferences.dart';
+
 import '../widget/custom_dialog_box.dart';
-import 'package:yibe_final_ui/pages/AddToResume/AddSkills.dart';
+import 'Preferences.dart';
 
 class College extends StatefulWidget {
   static final routeName = "/College";
@@ -243,7 +244,7 @@ class _CollegeState extends State<College> {
                           onTap: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              return Money();
+                              return MoneyMatters(Constants.uid);
                             }));
                           },
                           child: Container(
