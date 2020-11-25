@@ -431,31 +431,17 @@ class _PaymentPopUpAnimationState extends State<PaymentPopUpAnimation>
                                                   isActive: true,
                                                   timeOfTransaction:
                                                       Timestamp.now());
-                                          TransactionDetails
-                                              l = TransactionDetails(
+                                          TransactionDetails l =
+                                              TransactionDetails(
                                                   id: docId,
                                                   userId: widget.uid,
-                                                  name: widget
-                                                                  .lenderData[
-                                                              'username'] ==
-                                                          ""
-                                                      ? ""
-                                                      : widget
-                                                              .lenderData[
-                                                          'username'],
-                                                  email: widget
-                                                                  .lenderData[
-                                                              'email'] ==
-                                                          ""
-                                                      ? ""
-                                                      : widget
-                                                          .lenderData['email'],
-                                                  amount:
-                                                      int
-                                                          .parse(
-                                                              _amount
-                                                                  .text
-                                                                  .trim()),
+                                                  name: widget.lenderData[
+                                                      'username'],
+                                                  email: widget.lenderData[
+                                                      'email'],
+                                                  amount: int.parse(_amount
+                                                      .text
+                                                      .trim()),
                                                   comment: _comment.text,
                                                   transactionType: 'borrowed',
                                                   isActive: true,

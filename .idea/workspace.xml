@@ -16,29 +16,13 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="33b2f30a-4efa-4781-9652-136b74f4d400" name="Default Changelist" comment="Ram-push and hritik">
-      <change afterPath="$PROJECT_DIR$/lib/model/money.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pages/Money/MoneyMatters.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pages/Money/PaymentPopUpAnimation.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pages/Money/borrow.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pages/Money/categories.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pages/Money/lend.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pages/Money/summary.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/services/growth_database.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/services/money_database.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins" afterDir="false" />
+    <list default="true" id="33b2f30a-4efa-4781-9652-136b74f4d400" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/.packages" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk.sha1" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk.sha1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/College.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/College.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/Money/PaymentPopUpAnimation.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/Money/PaymentPopUpAnimation.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/services/auth.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/auth.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +39,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Ram-updated1" />
+        <entry key="$PROJECT_DIR$" value="updated-2" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -135,7 +119,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606286100680</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="money matters and hritik">
+      <created>1606306353529</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1606306353529</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -180,37 +171,38 @@
     <MESSAGE value="All" />
     <MESSAGE value="Ram-push" />
     <MESSAGE value="Ram-push and hritik" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ram-push and hritik" />
+    <MESSAGE value="money matters and hritik" />
+    <option name="LAST_COMMIT_MESSAGE" value="money matters and hritik" />
   </component>
   <component name="WindowStateProjectService">
     <state x="654" y="295" key="#Notifications" timestamp="1606211190919">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="654" y="295" key="#Notifications/0.0.1536.864@0.0.1536.864" timestamp="1606211190919" />
-    <state x="423" y="29" key="CommitChangelistDialog2" timestamp="1606286363006">
+    <state x="423" y="29" key="CommitChangelistDialog2" timestamp="1606306350413">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="423" y="29" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1606286363006" />
+    <state x="423" y="29" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1606306350413" />
     <state x="548" y="187" key="FileChooserDialogImpl" timestamp="1606286488806">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="548" y="187" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1606286488806" />
-    <state width="1491" height="96" key="GridCell.Tab.0.bottom" timestamp="1606305787100">
+    <state width="1491" height="158" key="GridCell.Tab.0.bottom" timestamp="1606306786770">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1491" height="96" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1606305787100" />
-    <state width="1491" height="96" key="GridCell.Tab.0.center" timestamp="1606305787100">
+    <state width="1491" height="158" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1606306786770" />
+    <state width="1491" height="158" key="GridCell.Tab.0.center" timestamp="1606306786769">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1491" height="96" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1606305787099" />
-    <state width="1491" height="96" key="GridCell.Tab.0.left" timestamp="1606305787099">
+    <state width="1491" height="158" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1606306786769" />
+    <state width="1491" height="158" key="GridCell.Tab.0.left" timestamp="1606306786769">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1491" height="96" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1606305787099" />
-    <state width="1491" height="96" key="GridCell.Tab.0.right" timestamp="1606305787100">
+    <state width="1491" height="158" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1606306786769" />
+    <state width="1491" height="158" key="GridCell.Tab.0.right" timestamp="1606306786769">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1491" height="96" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1606305787100" />
+    <state width="1491" height="158" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1606306786769" />
     <state x="147" y="69" key="MergeDialog" timestamp="1606239147651">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -227,10 +219,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state width="498" height="447" key="SwitcherDM/0.0.1536.864@0.0.1536.864" timestamp="1606303588195" />
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1606286368235">
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1606306437426">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1606286368235" />
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1606306437426" />
     <state x="490" y="221" key="git4idea.merge.GitPullDialog" timestamp="1606300206346">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
