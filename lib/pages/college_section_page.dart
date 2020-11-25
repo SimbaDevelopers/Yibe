@@ -1,10 +1,12 @@
 import 'dart:ui';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:yibe_final_ui/services/activity_database.dart';
 import 'package:yibe_final_ui/services/eventdatabase.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:yibe_final_ui/model/Activity.dart';
+import 'package:yibe_final_ui/services/growth_database.dart';
 import '../widget/card.dart';
 import 'PageHandler.dart';
 import 'package:yibe_final_ui/model/event.dart';
@@ -12,6 +14,7 @@ import 'package:yibe_final_ui/model/event.dart';
 class CollegeSectionPage extends StatefulWidget {
   static final routeName = "/CollegeSectionPage";
   final int activepassedvalue;
+  
   const CollegeSectionPage({
     Key key,
     this.activepassedvalue,
@@ -31,7 +34,9 @@ class _CollegeSectionPageState extends State<CollegeSectionPage> {
   bool isVisible = true;
   bool activeActivity;
   bool activeEvents;
-  bool activeGrowth;
+  bool activeGrowth; 
+  bool _isLoading = true;
+  QuerySnapshot _currentStream;
 
   static const List<Text> sublistActivity = [
     Text(
@@ -56,10 +61,7 @@ class _CollegeSectionPageState extends State<CollegeSectionPage> {
     ),
   ];
   static const List<Text> sublistGrowth = [
-    Text(
-      "All",
-      style: TextStyle(color: Colors.black, fontSize: 20.0),
-    ),
+  
     Text(
       "QuickFix",
       style: TextStyle(color: Color(0xff00D09E), fontSize: 20.0),
@@ -137,10 +139,31 @@ class _CollegeSectionPageState extends State<CollegeSectionPage> {
   @override
   void initState() {
     super.initState();
+    widget.activepassedvalue == 1 ? firebaseFunctions(widget.activepassedvalue) : null;
     activevalueColor = widget.activepassedvalue;
     list2 = switchsubList(widget.activepassedvalue);
   }
-
+ void firebaseFunctions(int value) async {
+    switch (value) {
+      case 0:
+        _currentStream = await GrowthDatabaseService().getInternships();
+        _isLoading = false;
+        setState(() {});
+        break;
+      case 1:
+        _currentStream = await GrowthDatabaseService().getInternships();
+        _isLoading = false;
+        setState(() {});
+        break;
+      case 2:
+        _currentStream = await GrowthDatabaseService().getInternships();
+        _isLoading = false;
+        setState(() {});
+        break;
+      default:
+        break;
+    }
+  }
   @override
   Widget build(BuildContext context) {
     final CarouselController _crouselController = CarouselController();
@@ -416,8 +439,9 @@ class _CollegeSectionPageState extends State<CollegeSectionPage> {
                                       onPressed: () {
                                         setState(() {
                                           isVisible = !isVisible;
-                                          activeType = index;
+                                         activeGrowth?   _isLoading = true : activeType = index;
                                         });
+                                        activeGrowth?switchSubList(index):null;
                                       },
                                       child: item);
                                 }),
@@ -591,7 +615,7 @@ class _CollegeSectionPageState extends State<CollegeSectionPage> {
                                 return Container();
                               }
                             })
-                        : StreamBuilder<List<Event>>(
+                        : activeEvents ?  StreamBuilder<List<Event>>(
                             stream:
                                 EventDatabaseService().getEvents(activeType),
                             builder: (context, snapshot) {
@@ -654,7 +678,111 @@ class _CollegeSectionPageState extends State<CollegeSectionPage> {
                               } else {
                                 return Container();
                               }
-                            }),
+                            })
+
+                            : 
+                            _isLoading
+                        ? Container(
+                            width: 200,
+                            height: 200,
+                            child: Text("please wait"),
+                          )
+                        : ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: _currentStream.docs.length,
+                            itemBuilder: (context, index) {
+                              final String Ctype =
+                                  _currentStream.docs[index].data()['type'];
+                              print(Ctype);
+                              int cardNo;
+                              // 1-event , 2-internships ,3-small job,4-project,5-sports,6-e sports,7-peerlearning,8-social learning
+                              switch (Ctype) {
+                                case 'Event':
+                                  cardNo = 1;
+                                  break;
+                                case 'Internship':
+                                  cardNo = 2;
+
+                                  break;
+                                case 'small- job':
+                                  cardNo = 3;
+                                  break;
+                                case 'project':
+                                  cardNo = 4;
+                                  break;
+                                case 'sports':
+                                  cardNo = 5;
+
+                                  break;
+                                case 'peerLearning':
+                                  cardNo = 7;
+                                  break;
+                                case 'e-sports':
+                                  cardNo = 6;
+                                  break;
+                                case 'social learning':
+                                  cardNo = 8;
+                                  break;
+                              }
+                              Map tagsMap =
+                                  _currentStream.docs[index].data()['tags'];
+                              Map projectDetailsMap = _currentStream.docs[index]
+                                  .data()['projectDetail'];
+                              List<String> tagsList =
+                                  []; //tags.entries.map((e) => tagss(tagTitle: e.value,tgNo: e.key)).toList();
+                              tagsList = tagsMap.entries
+                                  .map((e) => e.value.toString())
+                                  .toList();
+                              tagsList.forEach((element) {
+                                print(element);
+                              });
+
+                              List<String> projectDetailsList = [];
+                              projectDetailsList = projectDetailsMap.entries
+                                  .map((e) => e.value.toString())
+                                  .toList();
+                              // projectDetails.forEach((key, value) => projectDetailsList.add(value));
+                              projectDetailsList.forEach((element) {
+                                print(element);
+                              });
+                              print('cardNo $cardNo');
+                              return BaseCard(
+                                type: cardNo,
+                                noOfPeopleparticipated: _currentStream
+                                    .docs[index]
+                                    .data()['noOfPeopleparticipated'],
+                                totalNoofparticipation: _currentStream
+                                    .docs[index]
+                                    .data()['totalNoofparticipation'],
+                                price:
+                                    _currentStream.docs[index].data()['price'],
+                                date: _currentStream.docs[index].data()['date'],
+                                time: _currentStream.docs[index].data()['time'],
+                                title:
+                                    _currentStream.docs[index].data()['title'],
+                                location: _currentStream.docs[index]
+                                    .data()['location'],
+                                organiser: _currentStream.docs[index]
+                                    .data()['organiser'],
+                                organiserId:
+                                    " _currentStream.docs[index].data()['organiserId']",
+                                tags: tagsList,
+                                pathOfimg: _currentStream.docs[index]
+                                    .data()['pathOfimg'],
+                                jobDuration: _currentStream.docs[index]
+                                    .data()['jobDuration'],
+                                jobTitle: _currentStream.docs[index]
+                                    .data()['jobTitle'],
+                                projectDetail: projectDetailsList,
+                                workingPhase: _currentStream.docs[index]
+                                    .data()['workingPhase'],
+                              );
+                            },
+                          )
+                            
+                            ,
+
                   ],
                 ),
               ),
@@ -662,6 +790,32 @@ class _CollegeSectionPageState extends State<CollegeSectionPage> {
           ),
         ]));
   }
+  void switchSubList(int value) async {
+      print('$value');
+      switch (value) {
+        case 0:
+          _currentStream = await GrowthDatabaseService().getQuickFixes();
+          _isLoading = false;
+          setState(() {});
+          break;
+
+        case 1:
+          _currentStream = await GrowthDatabaseService().getInternships();
+          _isLoading = false;
+          setState(() {});
+          break;
+        case 2:
+          _currentStream = await GrowthDatabaseService().getProjects();
+          _isLoading = false;
+          setState(() {});
+          break;
+        default:
+          _currentStream = await GrowthDatabaseService().getProjects();
+          _isLoading = false;
+          setState(() {});
+          break;
+      }
+    }
 }
 
 class BottomList extends StatelessWidget {
