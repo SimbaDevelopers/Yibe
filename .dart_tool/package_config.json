@@ -152,6 +152,12 @@
       "languageVersion": "2.0"
     },
     {
+      "name": "firebase_storage",
+      "rootUri": "file:///C:/src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_storage-4.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
       "name": "flutter",
       "rootUri": "file:///C:/src/flutter/flutter/packages/flutter",
       "packageUri": "lib/",
@@ -159,7 +165,7 @@
     },
     {
       "name": "flutter_plugin_android_lifecycle",
-      "rootUri": "file:///D:/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.11",
+      "rootUri": "file:///C:/src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.11",
       "packageUri": "lib/",
       "languageVersion": "2.1"
     },
@@ -201,13 +207,13 @@
     },
     {
       "name": "image_picker",
-      "rootUri": "file:///D:/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.6.7+14",
+      "rootUri": "file:///C:/src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.6.7+14",
       "packageUri": "lib/",
       "languageVersion": "2.1"
     },
     {
       "name": "image_picker_platform_interface",
-      "rootUri": "file:///D:/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker_platform_interface-1.1.1",
+      "rootUri": "file:///C:/src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker_platform_interface-1.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.5"
     },
@@ -392,7 +398,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2020-11-24T13:03:12.555600Z",
+  "generated": "2020-11-24T17:32:43.942343Z",
   "generator": "pub",
   "generatorVersion": "2.10.4"
 }
