@@ -1,17 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collegesection/helper/Constants.dart';
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:yibe_final_ui/helper/Constants.dart';
 
 class ResumeDatabase {
-
- 
+  //var uid = Constants.uid;
+  var uid = Constants.uid;
   final CollectionReference usersCollection =
-      FirebaseFirestore.instance.collection('users');
+      FirebaseFirestore.instance.collection('Users');
 
   Future addSkill(String skill) async {
-     var uid =await Constants.uid;
     var map = {"type": "skills", "information": skill};
     await usersCollection.doc(uid).collection('Resume').add(map);
     QuerySnapshot snapshot =
@@ -24,7 +23,6 @@ class ResumeDatabase {
   }
 
   Future addInterest(String interest) async {
-     var uid =await Constants.uid;
     var map = {"type": "interset", "information": interest};
     await usersCollection.doc(uid).collection('Resume').add(map);
     QuerySnapshot snapshot =
@@ -45,7 +43,7 @@ class ResumeDatabase {
       String endDate,
       String description,
       File image) async {
-         var uid =await Constants.uid;
+        print("expreience");
     var images = '';
     final StorageReference firebaseStorageRef = FirebaseStorage.instance
         .ref()
@@ -62,6 +60,7 @@ class ResumeDatabase {
     }
     var map = {
       "type": "experence",
+      "title":title,
       "company": company,
       "location": location,
       "startDate": startDate,
@@ -83,7 +82,6 @@ class ResumeDatabase {
       String activity,
       File image) async {
     var images = '';
-         var uid =await Constants.uid;
     final StorageReference firebaseStorageRef = FirebaseStorage.instance
         .ref()
         .child('${DateTime.now().millisecondsSinceEpoch}');
@@ -115,7 +113,6 @@ class ResumeDatabase {
 
   Future addAchivement(String title, String code, String description,
       String link, String date, File image) async {
-             var uid =await Constants.uid;
     var images = '';
     final StorageReference firebaseStorageRef = FirebaseStorage.instance
         .ref()
@@ -144,31 +141,51 @@ class ResumeDatabase {
   }
 
   Future<QuerySnapshot> getData() async {
-         var uid =await Constants.uid;
     return await usersCollection.doc(uid).collection('Resume').get();
   }
 
 
   Future<QuerySnapshot> getUserDetail()async{
-         var uid =await Constants.uid;
       print(uid);
      QuerySnapshot snapshot = await usersCollection.doc(uid).collection('PersonalInfo').get();
       if (snapshot.docs.length > 0) {
       return snapshot;
     } else {
+    DocumentSnapshot userRef =  await usersCollection.doc(uid).get();
+      String email = userRef['emailId'];
+      String id = userRef['userName'];
+    
+      String userName = userRef['fullname'];
+      print(userName);
+      print(email);
+      print(id);
       Map<String,dynamic> map = {
-        'userName':'userName',
-        'organiserId':'id',
-        'age':0,
-        'phone':0,
+        'userName':userName,
+        'organiserId': id,
+        'age':'age',
+        'phone':'phone',
         'city':'city',
         'add':'address',
-        'email':'email',
+        'email': email,
         'linkedIn':'linkedIn',
         'twitter':'twitter',
       };
       await usersCollection.doc(uid).collection('PersonalInfo').add(map);
       return await usersCollection.doc(uid).collection('PersonalInfo').get();
     }
+  }
+  Future addPersonalDetail(String userName,String id,String age,String phone, String city ,String address ,String email ,String linkedIn,String twitter)async{
+Map<String,dynamic> map = {
+        'userName':userName,
+        'organiserId':id,
+        'age':age,
+        'phone':phone,
+        'city':city,
+        'add':address,
+        'email':email,
+        'linkedIn':linkedIn,
+        'twitter':twitter,
+      };
+      await usersCollection.doc(uid).collection('PersonalInfo').add(map);
   }
 }
