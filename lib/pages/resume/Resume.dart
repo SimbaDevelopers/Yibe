@@ -1,12 +1,9 @@
-
+import 'package:collegesection/services/resume_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import 'dart:io';
-
 import 'package:image_picker/image_picker.dart';
-import 'package:yibe_final_ui/services/resume_database.dart';
 
 double screenWidth;
 
@@ -38,6 +35,8 @@ class Experience {
       this.endDate, this.description, this.image);
 }
 
+//Experience exp;
+
 class Achievement {
   final String title;
   final String code;
@@ -64,29 +63,40 @@ class PersonalInfo {
       this.email, this.linkedIn, this.twitter);
 }
 
+// PersonalInfo personal;
 class Resume extends StatefulWidget {
   @override
   _ResumeState createState() => _ResumeState();
 }
 
 class _ResumeState extends State<Resume> {
-  TextEditingController SkillController = TextEditingController();
-  TextEditingController experTitleController = TextEditingController();
-  TextEditingController employmentTypeController = TextEditingController();
-  TextEditingController companyTypeController = TextEditingController();
-  TextEditingController locationController = TextEditingController();
-  TextEditingController experienceDesc = TextEditingController();
-  TextEditingController achieveTitle = TextEditingController();
-  TextEditingController achieveCode = TextEditingController();
-  TextEditingController achieveDescription = TextEditingController();
-  TextEditingController achieveLink = TextEditingController();
-  TextEditingController achievedate = TextEditingController();
-  TextEditingController eduSchool = TextEditingController();
-  TextEditingController edudegree = TextEditingController();
-  TextEditingController eduField = TextEditingController();
-  TextEditingController eduGrade = TextEditingController();
-  TextEditingController eduDescription = TextEditingController();
-  TextEditingController eduActivity = TextEditingController();
+  TextEditingController _SkillController = TextEditingController();
+  TextEditingController _experTitleController =TextEditingController();
+  TextEditingController _employmentTypeController =TextEditingController();
+  TextEditingController _companyTypeController =TextEditingController();
+  TextEditingController _locationController =TextEditingController();
+  TextEditingController _experienceDesc =TextEditingController();
+  TextEditingController _achieveTitle = TextEditingController();
+  TextEditingController _achieveCode = TextEditingController();
+  TextEditingController _achieveDescription = TextEditingController();
+  TextEditingController _achieveLink = TextEditingController();
+  TextEditingController _achievedate = TextEditingController();
+  TextEditingController _eduSchool = TextEditingController();
+  TextEditingController _edudegree = TextEditingController();
+  TextEditingController __eduField = TextEditingController();
+  TextEditingController _eduGrade = TextEditingController();
+  TextEditingController _eduDescription = TextEditingController();
+  TextEditingController _eduActivity = TextEditingController();
+  TextEditingController _userName = TextEditingController();
+  TextEditingController _age = TextEditingController();
+  TextEditingController _phoneNumber = TextEditingController();
+  TextEditingController _id = TextEditingController();
+  TextEditingController _address = TextEditingController();
+  TextEditingController _city = TextEditingController();
+  TextEditingController _email= TextEditingController();
+  TextEditingController _linkedIn = TextEditingController();
+  TextEditingController _twitter = TextEditingController();
+  final picker = ImagePicker();
 
   File image;
   bool isLoading = true;
@@ -94,25 +104,12 @@ class _ResumeState extends State<Resume> {
   var interestController = TextEditingController();
   String userName;
   String organiserId;
-  int age, phone;
+  String age, phone;
   String city;
   String add;
   String email;
   String linkedIn;
   String twitter;
-  final picker = ImagePicker();
-
-  Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedFile != null) {
-        image = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
 
   List<String> namesofSection = [
     'Personal Information',
@@ -140,7 +137,7 @@ class _ResumeState extends State<Resume> {
   List<bool> valueofSection = [false, false, false, false, false, false, false];
   static bool isEditMode = false;
   List<String> btnSvgName = [
-    'assets/images/downloadbtn.svg',
+    'assets/images/download_btn.svg',
     'assets/images/viewpdf_btn.svg',
     'assets/images/lock_btn.svg',
     'assets/images/share_btn.svg',
@@ -413,18 +410,18 @@ class _ResumeState extends State<Resume> {
         lastDate: DateTime(2101));
     if (picked != null && picked != selectedDate)
       setState(() {
-        achievedate.text = picked.toString();
         selectedDate = picked;
       });
   }
 
   @override
   void initState() {
+
     updateData();
     super.initState();
   }
 
-/**String organiserId;
+/*String organiserId;
   int age, phone;
   String city;
   String  add ;
@@ -526,7 +523,7 @@ class _ResumeState extends State<Resume> {
                     ),
                     SizedBox(height: 8.0),
                     Text(
-                      "userName",
+                      userName,
                       style: TextStyle(
                         color: Color(0xFF424283),
                         fontSize: 32.0,
@@ -601,7 +598,7 @@ class _ResumeState extends State<Resume> {
                                 ),
                                 SizedBox(width: screenWidth * 0.2),
                                 Text(
-                                  'City : $city',
+                                  'City :$city',
                                   style: TextStyle(
                                       fontSize: 16.0, fontFamily: 'Poppins'),
                                 ),
@@ -609,7 +606,7 @@ class _ResumeState extends State<Resume> {
                             ),
                             SizedBox(height: 12.0),
                             Text(
-                              'Address',
+                              'Address:',
                               style: TextStyle(
                                 fontSize: 16.0,
                                 fontFamily: 'Poppins',
@@ -635,7 +632,7 @@ class _ResumeState extends State<Resume> {
                             ),
                             SizedBox(height: 5.0),
                             Text(
-                              phone.toString(),
+                              phone.toString(), //  personal.phoneNumber.toString(),
                               style: TextStyle(
                                 fontSize: 16.0,
                                 fontFamily: 'Poppins',
@@ -653,6 +650,7 @@ class _ResumeState extends State<Resume> {
                             SizedBox(height: 5.0),
                             Text(
                               email,
+                              //    personal.email,
                               style: TextStyle(
                                 fontSize: 16.0,
                                 fontFamily: 'Poppins',
@@ -739,164 +737,428 @@ class _ResumeState extends State<Resume> {
                                               child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
-                                                children: [
+                                                children: [ TextField(
+                                                          controller:
+                                                              _userName,
+                                                             decoration:
+                                                                InputDecoration(
+                                                              hintText:
+                                                                  'Name',
+                                                              hintStyle:
+                                                                  TextStyle(
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                            ) 
+                                                        ),
+                                                        SizedBox(height: 10.0,),
+                                                         TextField(
+                                                          controller:
+                                                              _id,
+                                                             decoration:
+                                                                InputDecoration(
+                                                              hintText:
+                                                                  'Organiser id',
+                                                              hintStyle:
+                                                                  TextStyle(
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                            ) 
+                                                        ),
                                                   Row(
                                                     children: [
-                                                      SizedBox(
-                                                        width: 70.0,
-                                                        child: TextBox(
-                                                            controller:
-                                                                skillController,
-                                                            hintTxt: 'Age',
-                                                            maxLine: 1),
-                                                      ),
+                                                       TextField(
+                                                          controller:
+                                                              _age,
+                                                             decoration:
+                                                                InputDecoration(
+                                                              hintText:
+                                                                  'Age',
+                                                              hintStyle:
+                                                                  TextStyle(
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                            ) 
+                                                        ),
                                                       SizedBox(width: 30.0),
                                                       SizedBox(
                                                         width: 70.0,
-                                                        child: TextBox(
-                                                            controller:
-                                                                skillController,
-                                                            hintTxt: 'City',
-                                                            maxLine: 1),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  TextBox(
-                                                      controller:
-                                                          skillController,
-                                                      hintTxt: 'Address',
-                                                      maxLine: 3),
-                                                  TextBox(
-                                                      controller:
-                                                          skillController,
-                                                      hintTxt: 'Phone Number',
-                                                      maxLine: 1),
-                                                  GestureDetector(
-                                                    onTap: () {},
-                                                    child: Text(
-                                                      '+ Add Phone',
-                                                      style: TextStyle(
-                                                        color:
-                                                            Color(0xFF424283),
-                                                        fontSize: 16.0,
-                                                        fontFamily: 'Poppins',
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(height: 10.0),
-                                                  TextBox(
-                                                      controller:
-                                                          skillController,
-                                                      hintTxt: 'E-mail',
-                                                      maxLine: 1),
-                                                  GestureDetector(
-                                                    onTap: () {},
-                                                    child: Text(
-                                                      '+ Add Email',
-                                                      style: TextStyle(
-                                                        color:
-                                                            Color(0xFF424283),
-                                                        fontSize: 16.0,
-                                                        fontFamily: 'Poppins',
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(height: 10.0),
-                                                  Row(
-                                                    children: [
-                                                      SizedBox(
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.3,
-                                                        child: TextBox(
-                                                            controller:
-                                                                skillController,
-                                                            hintTxt:
-                                                                'Socials link',
-                                                            maxLine: 1),
-                                                      ),
-                                                      SizedBox(width: 30.0),
-                                                      SizedBox(
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.3,
-                                                        child: DropdownButton(
-                                                          value: dropDownValue,
-                                                          items: [
-                                                            DropdownMenuItem(
-                                                              value:
-                                                                  'Instagram',
-                                                              child: Text(
-                                                                'Instagram',
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize:
-                                                                      14.0,
-                                                                  fontFamily:
-                                                                      'Poppins',
-                                                                ),
+                                                        child:  TextField(
+                                                          controller:
+                                                              _city,
+                                                             decoration:
+                                                                InputDecoration(
+                                                              hintText:
+                                                                  'City',
+                                                              hintStyle:
+                                                                  TextStyle(
+                                                                color:
+                                                                    Colors.grey,
                                                               ),
-                                                            ),
-                                                            DropdownMenuItem(
-                                                              value: 'Twitter',
-                                                              child: Text(
-                                                                'Twitter',
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize:
-                                                                      14.0,
-                                                                  fontFamily:
-                                                                      'Poppins',
-                                                                ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
                                                               ),
-                                                            ),
-                                                            DropdownMenuItem(
-                                                              value: 'Facebook',
-                                                              child: Text(
-                                                                'Facebook',
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize:
-                                                                      14.0,
-                                                                  fontFamily:
-                                                                      'Poppins',
-                                                                ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
                                                               ),
-                                                            ),
-                                                          ],
-                                                          onChanged: (value) {
-                                                            setState(() {
-                                                              dropDownValue =
-                                                                  value;
-                                                            });
-                                                          },
+                                                            ) 
                                                         ),
                                                       ),
                                                     ],
                                                   ),
+                                                 TextField(
+                                                          controller:
+                                                              _address,
+                                                             decoration:
+                                                                InputDecoration(
+                                                              hintText:
+                                                                  'Address',
+                                                              hintStyle:
+                                                                  TextStyle(
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                            ) 
+                                                        ),
+                                                  TextField(
+                                                          controller:
+                                                              _phoneNumber,
+                                                             decoration:
+                                                                InputDecoration(
+                                                              hintText:
+                                                                  'Phone Number',
+                                                              hintStyle:
+                                                                  TextStyle(
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                            ) 
+                                                        ),
+                                                  // GestureDetector(
+                                                  //   onTap: () {},
+                                                  //   child: Text(
+                                                  //     '+ Add Phone',
+                                                  //     style: TextStyle(
+                                                  //       color:
+                                                  //           Color(0xFF424283),
+                                                  //       fontSize: 16.0,
+                                                  //       fontFamily: 'Poppins',
+                                                  //       fontWeight:
+                                                  //           FontWeight.w500,
+                                                  //     ),
+                                                  //   ),
+                                                  // ),
                                                   SizedBox(height: 10.0),
-                                                  GestureDetector(
-                                                    onTap: () {},
-                                                    child: Text(
-                                                      '+ Add Social',
-                                                      style: TextStyle(
-                                                        color:
-                                                            Color(0xFF424283),
-                                                        fontSize: 16.0,
-                                                        fontFamily: 'Poppins',
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                    ),
+                                                 TextField(
+                                                          controller:
+                                                              _email,
+                                                             decoration:
+                                                                InputDecoration(
+                                                              hintText:
+                                                                  'E-Mail',
+                                                              hintStyle:
+                                                                  TextStyle(
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                            ) 
+                                                        ),
+                                                 
+                                                  SizedBox(height: 10.0), TextField(
+                                                          controller:
+                                                              _linkedIn,
+                                                             decoration:
+                                                                InputDecoration(
+                                                              hintText:
+                                                                  'LinkedIn',
+                                                              hintStyle:
+                                                                  TextStyle(
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                            ) 
+                                                        ),
+                                                        SizedBox(height:10.0), TextField(
+                                                          controller:
+                                                              _twitter,
+                                                             decoration:
+                                                                InputDecoration(
+                                                              hintText:
+                                                                  'Twitter',
+                                                              hintStyle:
+                                                                  TextStyle(
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                            ) 
+                                                        ),
+                                                  Row(
+                                                    children: [
+                                                      // SizedBox(
+                                                      //   width: MediaQuery.of(
+                                                      //               context)
+                                                      //           .size
+                                                      //           .width *
+                                                      //       0.3,
+                                                      //   child: TextBox(
+                                                      //       controller:
+                                                      //           skillController,
+                                                      //       hintTxt:
+                                                      //           'Socials link',
+                                                      //       maxLine: 1),
+                                                      // ),
+                                                     // SizedBox(width: 30.0),
+                                                      // SizedBox(
+                                                      //   width: MediaQuery.of(
+                                                      //               context)
+                                                      //           .size
+                                                      //           .width *
+                                                      //       0.3,
+                                                      //   child: DropdownButton(
+                                                      //     value: dropDownValue,
+                                                      //     items: [
+                                                      //       DropdownMenuItem(
+                                                      //         value:
+                                                      //             'Instagram',
+                                                      //         child: Text(
+                                                      //           'Instagram',
+                                                      //           style:
+                                                      //               TextStyle(
+                                                      //             fontSize:
+                                                      //                 14.0,
+                                                      //             fontFamily:
+                                                      //                 'Poppins',
+                                                      //           ),
+                                                      //         ),
+                                                      //       ),
+                                                      //       DropdownMenuItem(
+                                                      //         value: 'Twitter',
+                                                      //         child: Text(
+                                                      //           'Twitter',
+                                                      //           style:
+                                                      //               TextStyle(
+                                                      //             fontSize:
+                                                      //                 14.0,
+                                                      //             fontFamily:
+                                                      //                 'Poppins',
+                                                      //           ),
+                                                      //         ),
+                                                      //       ),
+                                                      //       DropdownMenuItem(
+                                                      //         value: 'Facebook',
+                                                      //         child: Text(
+                                                      //           'Facebook',
+                                                      //           style:
+                                                      //               TextStyle(
+                                                      //             fontSize:
+                                                      //                 14.0,
+                                                      //             fontFamily:
+                                                      //                 'Poppins',
+                                                      //           ),
+                                                      //         ),
+                                                      //       ),
+                                                      //     ],
+                                                      //     onChanged: (value) {
+                                                      //       setState(() {
+                                                      //         dropDownValue =
+                                                      //             value;
+                                                      //       });
+                                                      //     },
+                                                      //   ),
+                                                      // ),
+                                                    ],
                                                   ),
+                                                  SizedBox(height: 10.0),
+                                                  // GestureDetector(
+                                                  //   onTap: () {},
+                                                  //   child: Text(
+                                                  //     '+ Add Social',
+                                                  //     style: TextStyle(
+                                                  //       color:
+                                                  //           Color(0xFF424283),
+                                                  //       fontSize: 16.0,
+                                                  //       fontFamily: 'Poppins',
+                                                  //       fontWeight:
+                                                  //           FontWeight.w500,
+                                                  //     ),
+                                                  //   ),
+                                                  // ),
                                                 ],
                                               ),
                                             ),
@@ -921,7 +1183,15 @@ class _ResumeState extends State<Resume> {
                                                       BorderRadius.circular(
                                                           18.0),
                                                 ),
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  ResumeDatabase().addPersonalDetail(_userName.text, _id.text, _age.text, _phoneNumber.text, _city.text, _address.text, _email.text, _linkedIn.text, _twitter.text);
+                                                  setState(() {
+                                                    
+                                                  });
+                                                  Navigator.pop(context);
+                                                  updateData();
+                                                }
+                                                ,
                                                 color: Color(0xFF0CB5BB),
                                                 textColor: Colors.white,
                                                 child: Text(
@@ -954,344 +1224,435 @@ class _ResumeState extends State<Resume> {
                       ),
                     ),
 /*skills*/ ResumeTopic(
-                      key: UniqueKey(),
-                      isEditMode: isEditMode,
-                      onTapFunction: () {
-                        setState(() {
-                          isSkills = !isSkills;
-                        });
-                      },
-                      topicName: 'Skills',
-                      isVisible: isSkills,
-                      dropdownContainer: isEditMode
-                          ? GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text(
-                                        'Add Skills',
-                                        style: TextStyle(
-                                          color: Color(0xFF424283),
-                                          fontSize: 16.0,
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                      content: SingleChildScrollView(
-                                        child: SizedBox(
-                                          width: screenWidth * 8,
-                                          child: Column(
-                                            children: [
-                                              TextField(
-                                                controller: SkillController,
-                                                maxLines: 3,
-                                                minLines: 1,
-                                                decoration: InputDecoration(
-                                                  hintText: 'Type in skills',
-                                                  hintStyle: TextStyle(
-                                                    color: Colors.grey,
-                                                  ),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                10.0)),
-                                                    borderSide: BorderSide(
-                                                        color:
-                                                            Color(0xFF0CB5BB)),
-                                                  ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                10.0)),
-                                                    borderSide: BorderSide(
-                                                        color:
-                                                            Color(0xFF0CB5BB)),
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(height: 10.0),
-                                              GridView.builder(
-                                                shrinkWrap: true,
-                                                scrollDirection: Axis.vertical,
-                                                gridDelegate:
-                                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 2,
-                                                  crossAxisSpacing: 5.0,
-                                                  mainAxisSpacing: 5.0,
-                                                ),
-                                                itemCount: skills.length,
-                                                itemBuilder: (context, index) {
-                                                  return Container(
-                                                    width: 10.0,
-                                                    height: 50.0,
-                                                    decoration: BoxDecoration(
-                                                      color: Color(0xFF424283),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10.0),
-                                                    ),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Text(
-                                                          skills[index],
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white),
-                                                        ),
-                                                        GestureDetector(
-                                                          onTap: () {
-                                                            setState(() {
-                                                              skills.removeAt(
-                                                                  index);
-                                                            });
-                                                          },
-                                                          child: SvgPicture.asset(
-                                                              'assets/images/close_btn.svg',
-                                                              width: 22.0,
-                                                              height: 22.0),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  );
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      actions: [
-                                        FlatButton(
-                                          child: Text(
-                                            'Cancle',
-                                            style: TextStyle(
-                                              color: Color(0xFF0CB5BB),
-                                              fontSize: 16.0,
-                                            ),
-                                          ),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                        ),
-                                        SizedBox(width: screenWidth * 0.1),
-                                        RaisedButton(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(18.0),
-                                          ),
-                                          onPressed: () async {
-                                            await ResumeDatabase().addSkill(
-                                                SkillController.text);
-                                         //   _SkillController.clear();
-                                            setState(() {});
-                                            Navigator.pop(context);
-                                          },
-                                          color: Color(0xFF0CB5BB),
-                                          textColor: Colors.white,
-                                          child: Text(
-                                            "Save",
-                                            style: TextStyle(
-                                              fontSize: 16.0,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(width: screenWidth * 0.05),
-                                      ],
-                                    );
-                                  },
+                        key: UniqueKey(),
+                        isEditMode: isEditMode,
+                        onTapFunction: () {
+                          setState(() {
+                            isSkills = !isSkills;
+                          });
+                        },
+                        topicName: 'Skills',
+                        isVisible: isSkills,
+                        dropdownContainer: Column(
+                          children: [
+                            GridView.builder(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 5.0,
+                                mainAxisSpacing: 5.0,
+                              ),
+                              itemCount: skills.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  width: 10.0,
+                                  height: 30.0,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFF424283),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: Text(
+                                    skills[index],
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 );
                               },
-                              child: Text(
-                                'Add Skills',
-                                style: TextStyle(
-                                  color: Color(0xFF424283),
-                                  fontSize: 20.0,
-                                  fontFamily: 'Poppins',
-                                ),
-                              ),
-                            )
-                          : SizedBox(),
-                    ),
-/*interest*/ ResumeTopic(
-                      key: UniqueKey(),
-                      isEditMode: isEditMode,
-                      onTapFunction: () {
-                        setState(() {
-                          isInterest = !isInterest;
-                        });
-                      },
-                      topicName: 'Interest',
-                      isVisible: isInterest,
-                      dropdownContainer: isEditMode
-                          ? GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text(
-                                        'Add interests',
-                                        style: TextStyle(
-                                          color: Color(0xFF424283),
-                                          fontSize: 16.0,
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                      content: SingleChildScrollView(
-                                        child: SizedBox(
-                                          width: screenWidth * 8,
-                                          child: Column(
-                                            children: [
-                                              TextField(
-                                                controller: interestController,
-                                                maxLines: 3,
-                                                minLines: 1,
-                                                decoration: InputDecoration(
-                                                  hintText: 'Type in interests',
-                                                  hintStyle: TextStyle(
-                                                    color: Colors.grey,
-                                                  ),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                10.0)),
-                                                    borderSide: BorderSide(
-                                                        color:
-                                                            Color(0xFF0CB5BB)),
-                                                  ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                10.0)),
-                                                    borderSide: BorderSide(
-                                                        color:
-                                                            Color(0xFF0CB5BB)),
-                                                  ),
-                                                ),
+                            ),
+                            isEditMode
+                                ? GestureDetector(
+                                    onTap: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text(
+                                              'Add Skills',
+                                              style: TextStyle(
+                                                color: Color(0xFF424283),
+                                                fontSize: 16.0,
+                                                fontFamily: 'Poppins',
+                                                fontWeight: FontWeight.w500,
                                               ),
-                                              SizedBox(height: 10.0),
-                                              GridView.builder(
-                                                shrinkWrap: true,
-                                                scrollDirection: Axis.vertical,
-                                                itemCount: interest.length,
-                                                gridDelegate:
-                                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 2,
-                                                  crossAxisSpacing: 5.0,
-                                                  mainAxisSpacing: 5.0,
-                                                ),
-                                                itemBuilder: (context, index) {
-                                                  return Container(
-                                                    width: 130.0,
-                                                    decoration: BoxDecoration(
-                                                      color: Color(0xFF424283),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10.0),
-                                                    ),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Text(
-                                                          interest[index],
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white),
-                                                        ),
-                                                        GestureDetector(
-                                                          onTap: () {
-                                                            setState(() {
-                                                              interest.removeAt(
-                                                                  index);
-                                                            });
-                                                          },
-                                                          child: SvgPicture.asset(
-                                                              'assets/images/close_btn.svg',
-                                                              width: 22.0,
-                                                              height: 22.0),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  );
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      actions: [
-                                        FlatButton(
-                                          child: Text(
-                                            'Cancle',
-                                            style: TextStyle(
-                                              color: Color(0xFF0CB5BB),
-                                              fontSize: 16.0,
                                             ),
-                                          ),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                        ),
-                                        SizedBox(width: screenWidth * 0.1),
-                                        RaisedButton(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(18.0),
-                                          ),
-                                          onPressed: () {
-                                            setState(() async {
-                                              await ResumeDatabase()
-                                                  .addInterest(
-                                                      interestController.text);
-                                              interest
-                                                  .add(interestController.text);
+                                            content: SingleChildScrollView(
+                                              child: SizedBox(
+                                                width: screenWidth * 8,
+                                                child: Column(
+                                                  children: [
+                                                    TextField(
+                                                      controller:
+                                                          _SkillController,
+                                                      maxLines: 3,
+                                                      minLines: 1,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        hintText:
+                                                            'Type in skills',
+                                                        hintStyle: TextStyle(
+                                                          color: Colors.grey,
+                                                        ),
+                                                        enabledBorder:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          10.0)),
+                                                          borderSide: BorderSide(
+                                                              color: Color(
+                                                                  0xFF0CB5BB)),
+                                                        ),
+                                                        focusedBorder:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          10.0)),
+                                                          borderSide: BorderSide(
+                                                              color: Color(
+                                                                  0xFF0CB5BB)),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(height: 10.0),
+                                                    GridView.builder(
+                                                      shrinkWrap: true,
+                                                      scrollDirection:
+                                                          Axis.vertical,
+                                                      gridDelegate:
+                                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                                        crossAxisCount: 2,
+                                                        crossAxisSpacing: 5.0,
+                                                        mainAxisSpacing: 5.0,
+                                                      ),
+                                                      itemCount: skills.length,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        return Container(
+                                                          width: 10.0,
+                                                          height: 30.0,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Color(
+                                                                0xFF424283),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                          ),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Text(
+                                                                skills[index],
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white),
+                                                              ),
+                                                              // GestureDetector(
+                                                              //   onTap: () {
+                                                              //     setState(() {
+                                                              //       skills.removeAt(
+                                                              //           index);
+                                                              //     });
+                                                              //   },
+                                                              //   child: SvgPicture.asset(
+                                                              //       'assets/images/close_btn.svg',
+                                                              //       width: 22.0,
+                                                              //       height:
+                                                              //           22.0),
+                                                              // ),
+                                                            ],
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            actions: [
+                                              FlatButton(
+                                                child: Text(
+                                                  'Cancle',
+                                                  style: TextStyle(
+                                                    color: Color(0xFF0CB5BB),
+                                                    fontSize: 16.0,
+                                                  ),
+                                                ),
+                                                onPressed: () {
                                                   Navigator.pop(context);
-                                            //  interestController.clear();
-                                            });
-                                          },
-                                          color: Color(0xFF0CB5BB),
-                                          textColor: Colors.white,
-                                          child: Text(
-                                            "Save",
-                                            style: TextStyle(
-                                              fontSize: 16.0,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(width: screenWidth * 0.05),
-                                      ],
-                                    );
-                                  },
+                                                },
+                                              ),
+                                              SizedBox(
+                                                  width: screenWidth * 0.1),
+                                              RaisedButton(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          18.0),
+                                                ),
+                                                onPressed: () async {
+                                                  await ResumeDatabase()
+                                                      .addSkill(_SkillController
+                                                          .text);
+                                                  _SkillController.clear();
+                                                  setState(() {});
+                                                  Navigator.pop(context);
+                                                  updateData();
+                                                },
+                                                color: Color(0xFF0CB5BB),
+                                                textColor: Colors.white,
+                                                child: Text(
+                                                  "Save",
+                                                  style: TextStyle(
+                                                    fontSize: 16.0,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                  width: screenWidth * 0.05),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: Text(
+                                      'Add Skills',
+                                      style: TextStyle(
+                                        color: Color(0xFF424283),
+                                        fontSize: 20.0,
+                                        fontFamily: 'Poppins',
+                                      ),
+                                    ),
+                                  )
+                                : SizedBox(),
+                          ],
+                        )),
+/*interest*/ ResumeTopic(
+                        key: UniqueKey(),
+                        isEditMode: isEditMode,
+                        onTapFunction: () {
+                          setState(() {
+                            isInterest = !isInterest;
+                          });
+                        },
+                        topicName: 'Interest',
+                        isVisible: isInterest,
+                        dropdownContainer: Column(
+                          children: [
+                            GridView.builder(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 5.0,
+                                mainAxisSpacing: 5.0,
+                              ),
+                              itemCount: interest.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  width: 10.0,
+                                  height: 30.0,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFF424283),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: Text(
+                                    interest[index],
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 );
                               },
-                              child: Text(
-                                'Add Interest',
-                                style: TextStyle(
-                                  color: Color(0xFF424283),
-                                  fontSize: 20.0,
-                                  fontFamily: 'Poppins',
-                                ),
-                              ),
-                            )
-                          : SizedBox(),
-                    ),
+                            ),
+                            isEditMode
+                                ? GestureDetector(
+                                    onTap: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text(
+                                              'Add interests',
+                                              style: TextStyle(
+                                                color: Color(0xFF424283),
+                                                fontSize: 16.0,
+                                                fontFamily: 'Poppins',
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                            content: SingleChildScrollView(
+                                              child: SizedBox(
+                                                width: screenWidth * 8,
+                                                child: Column(
+                                                  children: [
+                                                    TextField(
+                                                      controller:
+                                                          interestController,
+                                                      maxLines: 3,
+                                                      minLines: 1,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        hintText:
+                                                            'Type in interests',
+                                                        hintStyle: TextStyle(
+                                                          color: Colors.grey,
+                                                        ),
+                                                        enabledBorder:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          10.0)),
+                                                          borderSide: BorderSide(
+                                                              color: Color(
+                                                                  0xFF0CB5BB)),
+                                                        ),
+                                                        focusedBorder:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          10.0)),
+                                                          borderSide: BorderSide(
+                                                              color: Color(
+                                                                  0xFF0CB5BB)),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(height: 10.0),
+                                                    GridView.builder(
+                                                      shrinkWrap: true,
+                                                      scrollDirection:
+                                                          Axis.vertical,
+                                                      itemCount:
+                                                          interest.length,
+                                                      gridDelegate:
+                                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                                        crossAxisCount: 2,
+                                                        crossAxisSpacing: 5.0,
+                                                        mainAxisSpacing: 5.0,
+                                                      ),
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        return Container(
+                                                          width: 130.0,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Color(
+                                                                0xFF424283),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                          ),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Text(
+                                                                interest[index],
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white),
+                                                              ),
+                                                              // GestureDetector(
+                                                              //   onTap: () {
+                                                              //     setState(() {
+                                                              //       interest
+                                                              //           .removeAt(
+                                                              //               index);
+                                                              //     });
+                                                              //   },
+                                                              //   child: SvgPicture.asset(
+                                                              //       'assets/images/close_btn.svg',
+                                                              //       width: 22.0,
+                                                              //       height:
+                                                              //           22.0),
+                                                              // ),
+                                                            ],
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            actions: [
+                                              FlatButton(
+                                                child: Text(
+                                                  'Cancle',
+                                                  style: TextStyle(
+                                                    color: Color(0xFF0CB5BB),
+                                                    fontSize: 16.0,
+                                                  ),
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                              SizedBox(
+                                                  width: screenWidth * 0.1),
+                                              RaisedButton(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          18.0),
+                                                ),
+                                                onPressed: () {
+                                                  setState(() async {
+                                                    await ResumeDatabase()
+                                                        .addInterest(
+                                                            interestController
+                                                                .text);
+                                                    interest.add(
+                                                        interestController
+                                                            .text);
+                                                    interestController.clear();
+                                                    Navigator.pop(context);
+                                                    updateData();
+                                                  });
+                                                },
+                                                color: Color(0xFF0CB5BB),
+                                                textColor: Colors.white,
+                                                child: Text(
+                                                  "Save",
+                                                  style: TextStyle(
+                                                    fontSize: 16.0,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                  width: screenWidth * 0.05),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: Text(
+                                      'Add Interest',
+                                      style: TextStyle(
+                                        color: Color(0xFF424283),
+                                        fontSize: 20.0,
+                                        fontFamily: 'Poppins',
+                                      ),
+                                    ),
+                                  )
+                                : SizedBox(),
+                          ],
+                        )),
 /*experience*/ ResumeTopic(
                       key: UniqueKey(),
                       isEditMode: isEditMode,
@@ -1310,6 +1671,7 @@ class _ResumeState extends State<Resume> {
                                 shrinkWrap: true,
                                 itemCount: experienceDetials.length,
                                 itemBuilder: (BuildContext context, index) {
+                                  Experience exp = experienceDetials[index];
                                   return Dismissible(
                                     key: UniqueKey(),
                                     background: Container(color: Colors.red),
@@ -1323,15 +1685,40 @@ class _ResumeState extends State<Resume> {
                                     },
                                     child: ListTile(
                                       leading: CircleAvatar(
-                                        radius: 3.0,
-                                        backgroundColor: Color(0xFF7280FF),
+                                        child: Image.network(exp.image ,fit: BoxFit.contain,),
+                                        radius: 30.0,
+                                        backgroundColor: Colors.white,
                                       ),
-                                      title: Text(
-                                       experienceDetials[index].title ?? '',
+                                      title: Column(
+                                        children: [
+                                          Text(
+                                           exp.title,
+                                            //     exp.title,// experienceDetials[index],
+                                            style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          Text(
+                                            'timeline', // timeline,
+                                            style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.w500,
+                                              color: Color(0xFFA7A7A7),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      subtitle: Text(
                                         // experienceDetials[index],
+                                          exp.description ,// discription,
                                         style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontFamily: 'Poppins'),
+                                          fontSize: 12.0,
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
                                     ),
                                   );
@@ -1366,31 +1753,151 @@ class _ResumeState extends State<Resume> {
                                                   ),
                                                   content:
                                                       SingleChildScrollView(
+                                                    // _experTitleController.text,
+                                                    // _employmentTypeController
+                                                    //     .text,
+                                                    // _companyTypeController.text,
+                                                    // _locationController.text,
+                                                    // startDate,
+                                                    // endDate,
+                                                    // _experienceDesc.text,
                                                     child: Column(
                                                       children: [
-                                                        TextBox(
+                                                        TextField(
+                                                          controller:
+                                                              _experTitleController,
+                                                             decoration:
+                                                                InputDecoration(
+                                                              hintText:
+                                                                  'Title',
+                                                              hintStyle:
+                                                                  TextStyle(
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                            ) 
+                                                        ),
+                                                        TextField(
                                                             controller:
-                                                                experTitleController,
-                                                            hintTxt:
-                                                                'Experience Title',
-                                                            maxLine: 1),
-                                                        TextBox(
-                                                            controller:
-                                                                employmentTypeController,
-                                                            hintTxt:
-                                                                'Employment type',
-                                                            maxLine: 1),
-                                                        TextBox(
-                                                            controller:
-                                                                companyTypeController,
-                                                            hintTxt:
+                                                                skillController,
+                                                            decoration:
+                                                                InputDecoration(
+                                                              hintText:
+                                                                  'Employment type',
+                                                              hintStyle:
+                                                                  TextStyle(
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                            )),
+                                                        TextField(
+                                                          controller:
+                                                              _companyTypeController,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            hintText:
                                                                 'Company Name',
-                                                            maxLine: 1),
-                                                        TextBox(
-                                                            controller:
-                                                                locationController,
-                                                            hintTxt: 'Location',
-                                                            maxLine: 1),
+                                                            hintStyle:
+                                                                TextStyle(
+                                                              color:
+                                                                  Colors.grey,
+                                                            ),
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius: BorderRadius
+                                                                  .all(Radius
+                                                                      .circular(
+                                                                          10.0)),
+                                                              borderSide: BorderSide(
+                                                                  color: Color(
+                                                                      0xFF0CB5BB)),
+                                                            ),
+                                                            focusedBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius: BorderRadius
+                                                                  .all(Radius
+                                                                      .circular(
+                                                                          10.0)),
+                                                              borderSide: BorderSide(
+                                                                  color: Color(
+                                                                      0xFF0CB5BB)),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        TextField(
+                                                          controller:
+                                                              _locationController,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            hintText:
+                                                                'Location',
+                                                            hintStyle:
+                                                                TextStyle(
+                                                              color:
+                                                                  Colors.grey,
+                                                            ),
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius: BorderRadius
+                                                                  .all(Radius
+                                                                      .circular(
+                                                                          10.0)),
+                                                              borderSide: BorderSide(
+                                                                  color: Color(
+                                                                      0xFF0CB5BB)),
+                                                            ),
+                                                            focusedBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius: BorderRadius
+                                                                  .all(Radius
+                                                                      .circular(
+                                                                          10.0)),
+                                                              borderSide: BorderSide(
+                                                                  color: Color(
+                                                                      0xFF0CB5BB)),
+                                                            ),
+                                                          ),
+                                                        ),
                                                         Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
@@ -1455,12 +1962,40 @@ class _ResumeState extends State<Resume> {
                                                           ],
                                                         ),
                                                         SizedBox(height: 10.0),
-                                                        TextBox(
-                                                            controller:
-                                                                experienceDesc,
-                                                            hintTxt:
-                                                                'Discription',
-                                                            maxLine: 3),
+                                                        TextField(
+                                                          controller:
+                                                              _experienceDesc,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            hintText:
+                                                                'Description',
+                                                            hintStyle:
+                                                                TextStyle(
+                                                              color:
+                                                                  Colors.grey,
+                                                            ),
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius: BorderRadius
+                                                                  .all(Radius
+                                                                      .circular(
+                                                                          10.0)),
+                                                              borderSide: BorderSide(
+                                                                  color: Color(
+                                                                      0xFF0CB5BB)),
+                                                            ),
+                                                            focusedBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius: BorderRadius
+                                                                  .all(Radius
+                                                                      .circular(
+                                                                          10.0)),
+                                                              borderSide: BorderSide(
+                                                                  color: Color(
+                                                                      0xFF0CB5BB)),
+                                                            ),
+                                                          ),
+                                                        ),
                                                         Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
@@ -1516,7 +2051,7 @@ class _ResumeState extends State<Resume> {
                                                                 ),
                                                               ),
                                                               onPressed: () {
-                                                              getImage();
+                                                                getImage();
                                                               },
                                                             ),
                                                           ],
@@ -1549,26 +2084,28 @@ class _ResumeState extends State<Resume> {
                                                                 .circular(18.0),
                                                       ),
                                                       onPressed: () async {
+                                                        print("hello");
                                                         await ResumeDatabase()
                                                             .addExperienceDetials(
-                                                                experTitleController
+                                                                _experTitleController
                                                                     .text,
-                                                                employmentTypeController
+                                                                _employmentTypeController
                                                                     .text,
-                                                                companyTypeController
+                                                                _companyTypeController
                                                                     .text,
-                                                                locationController
+                                                                _locationController
                                                                     .text,
                                                                 startDate,
                                                                 endDate,
-                                                                experienceDesc
+                                                                _experienceDesc
                                                                     .text,
                                                                 image);
-                                                        
+                                                                print("experience added");
+                                                                setState(() {
+                                                                  
+                                                                });
                                                         Navigator.pop(context);
-                                                        setState(() {
-                                                          isEditMode = false;
-                                                        });
+                                                        updateData();
                                                       },
                                                       color: Color(0xFF0CB5BB),
                                                       textColor: Colors.white,
@@ -1619,7 +2156,7 @@ class _ResumeState extends State<Resume> {
                         ),
                       ),
                     ),
-                    ResumeTopic(
+                    /*education*/ ResumeTopic(
                       key: UniqueKey(),
                       isEditMode: isEditMode,
                       onTapFunction: () {
@@ -1649,15 +2186,15 @@ class _ResumeState extends State<Resume> {
                                         child: Column(
                                           children: [
                                             TextBox(
-                                                controller: eduSchool,
+                                                controller: skillController,
                                                 hintTxt: 'School / Colledge',
                                                 maxLine: 1),
                                             TextBox(
-                                                controller: edudegree,
+                                                controller: skillController,
                                                 hintTxt: 'Dgree',
                                                 maxLine: 1),
                                             TextBox(
-                                                controller: eduField,
+                                                controller: skillController,
                                                 hintTxt: 'Field of study',
                                                 maxLine: 1),
                                             Row(
@@ -1708,19 +2245,111 @@ class _ResumeState extends State<Resume> {
                                               ],
                                             ),
                                             SizedBox(height: 10.0),
-                                            TextBox(
-                                                controller: eduGrade,
-                                                hintTxt: 'Grade',
-                                                maxLine: 1),
-                                            TextBox(
-                                                controller: eduDescription,
-                                                hintTxt: 'Discription',
-                                                maxLine: 3),
-                                            TextBox(
-                                                controller: eduActivity,
-                                                hintTxt:
-                                                    'Co-curricular activities',
-                                                maxLine: 3),
+                                           TextField(
+                                                          controller:
+                                                              _eduGrade,
+                                                             decoration:
+                                                                InputDecoration(
+                                                              hintText:
+                                                                  'Grade',
+                                                              hintStyle:
+                                                                  TextStyle(
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                            ) 
+                                                        ),
+                                                        SizedBox(height: 10.0,),
+                                          TextField(
+                                                          controller:
+                                                              _eduDescription,
+                                                             decoration:
+                                                                InputDecoration(
+                                                              hintText:
+                                                                  ' Desciption',
+                                                              hintStyle:
+                                                                  TextStyle(
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                            ) 
+                                                        ),
+                                                        SizedBox(height: 10.0,),
+                                          TextField(
+                                                          controller:
+                                                              _eduActivity,
+                                                             decoration:
+                                                                InputDecoration(
+                                                              hintText:
+                                                                  'Activity',
+                                                              hintStyle:
+                                                                  TextStyle(
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                            ) 
+                                                        ),
+                                                        SizedBox(height: 10.0,),
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.start,
@@ -1751,7 +2380,7 @@ class _ResumeState extends State<Resume> {
                                                         SizedBox(
                                                           width: 56.0,
                                                           child: Text(
-                                                            'Add ',
+                                                            'Add media',
                                                             style: TextStyle(
                                                               color: Color(
                                                                   0xFF0CB5BB),
@@ -1763,7 +2392,6 @@ class _ResumeState extends State<Resume> {
                                                     ),
                                                   ),
                                                   onPressed: () {
-                                                    print("media");
                                                     getImage();
                                                   },
                                                 ),
@@ -1793,15 +2421,20 @@ class _ResumeState extends State<Resume> {
                                           ),
                                           onPressed: () async {
                                             ResumeDatabase().addEducation(
-                                                eduSchool.text,
-                                                edudegree.text,
-                                                eduField.text,
+                                                _eduSchool.text,
+                                                _edudegree.text,
+                                                __eduField.text,
                                                 startDate,
                                                 endDate,
-                                                eduGrade.text,
-                                                eduDescription.text,
-                                                eduActivity.text,
+                                                _eduGrade.text,
+                                                _eduDescription.text,
+                                                _eduActivity.text,
                                                 image);
+                                                setState(() {
+                                                  
+                                                });
+                                                Navigator.pop(context);
+                                                updateData();
                                           },
                                           color: Color(0xFF0CB5BB),
                                           textColor: Colors.white,
@@ -1859,22 +2492,146 @@ class _ResumeState extends State<Resume> {
                                       content: SingleChildScrollView(
                                         child: Column(
                                           children: [
-                                            TextBox(
-                                                controller: achieveTitle,
-                                                hintTxt: 'Achievements Title',
-                                                maxLine: 1),
-                                            TextBox(
-                                                controller: achieveCode,
-                                                hintTxt: 'Authentication Code',
-                                                maxLine: 1),
-                                            TextBox(
-                                                controller: achieveDescription,
-                                                hintTxt: 'Discription',
-                                                maxLine: 2),
-                                            TextBox(
-                                                controller: achieveLink,
-                                                hintTxt: 'Link ',
-                                                maxLine: 1),
+                                             TextField(
+                                                          controller:
+                                                              _achieveTitle,
+                                                             decoration:
+                                                                InputDecoration(
+                                                              hintText:
+                                                                  'Achievement Title',
+                                                              hintStyle:
+                                                                  TextStyle(
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                            ) 
+                                                        ),
+                                                        SizedBox(height: 10.0,),
+                                           TextField(
+                                                          controller:
+                                                              _achieveCode,
+                                                             decoration:
+                                                                InputDecoration(
+                                                              hintText:
+                                                                  'Auth code',
+                                                              hintStyle:
+                                                                  TextStyle(
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                            ) 
+                                                        ),
+                                                        SizedBox(height: 10.0,),
+                                            TextField(
+                                                          controller:
+                                                              _achieveDescription,
+                                                             decoration:
+                                                                InputDecoration(
+                                                              hintText:
+                                                                  'Achievement Desciption',
+                                                              hintStyle:
+                                                                  TextStyle(
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                            ) 
+                                                        ),
+                                                        SizedBox(height: 10.0,),
+                                           TextField(
+                                                          controller:
+                                                              _achieveLink,
+                                                             decoration:
+                                                                InputDecoration(
+                                                              hintText:
+                                                                  'Link',
+                                                              hintStyle:
+                                                                  TextStyle(
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10.0)),
+                                                                borderSide: BorderSide(
+                                                                    color: Color(
+                                                                        0xFF0CB5BB)),
+                                                              ),
+                                                            ) 
+                                                        ),
+                                                        SizedBox(height: 10.0,),
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.start,
@@ -1897,7 +2654,6 @@ class _ResumeState extends State<Resume> {
                                                   ),
                                                   onPressed: () {
                                                     _selectDate(context);
-                                                    //_achievedate.text = selectedDate;
                                                   },
                                                 ),
                                               ],
@@ -1972,17 +2728,19 @@ class _ResumeState extends State<Resume> {
                                                 BorderRadius.circular(18.0),
                                           ),
                                           onPressed: () async {
-                                            print("achievement");
-                                            print('achieve ment title  '+achieveTitle.text);
                                             await ResumeDatabase()
                                                 .addAchivement(
-                                                    SkillController.text,
-                                                    achieveCode.text,
-                                                    achieveDescription.text,
-                                                    achieveLink.text,
-                                                    achievedate.text,
+                                                    _achieveTitle.text,
+                                                    _achieveCode.text,
+                                                    _achieveDescription.text,
+                                                    _achieveLink.text,
+                                                    _achievedate.text,
                                                     image);
+                                                    setState(() {
+                                                      
+                                                    });
                                             Navigator.pop(context);
+                                            updateData();
                                           },
                                           color: Color(0xFF0CB5BB),
                                           textColor: Colors.white,
@@ -2145,6 +2903,18 @@ class _ResumeState extends State<Resume> {
         backgroundColor: Colors.white,
       ),
     );
+  }
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
   }
 }
 
