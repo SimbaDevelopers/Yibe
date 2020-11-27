@@ -134,14 +134,10 @@ class GrowthDatabaseService {
   }
 
   Future<QuerySnapshot> getQuickFixes() {
-    return quickfixCollection
-        .orderBy('timeOfCreation', descending: true)
-        .get();
+    return quickfixCollection.orderBy('timeOfCreation', descending: true).get();
   }
 
   Future<QuerySnapshot> getProjects() {
-    return projectCollection
-        .orderBy('timeOfCreation', descending: true)
-        .get();
+    return projectCollection.orderBy('timeOfCreation', descending: true).get();
   }
 }
