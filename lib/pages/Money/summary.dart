@@ -48,9 +48,9 @@ class _SummaryState extends State<Summary> {
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.2,
                   decoration: BoxDecoration(
-                    // color: Colors.red,
-                    image: DecorationImage(image: AssetImage('assets/images/Group 654.png'))
-                  ),
+                      // color: Colors.red,
+                      image: DecorationImage(
+                          image: AssetImage('assets/images/growth_card.png'))),
                 ),
               ),
               Center(

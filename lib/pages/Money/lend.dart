@@ -43,9 +43,6 @@ class _LendState extends State<Lend> {
   Future<String> getBorrowerQRCode() async {
     String codeSanner = await BarcodeScanner.scan(); //barcode scnner
     setState(() {
-      print(
-          "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss" +
-              codeSanner);
       qrCodeResult = codeSanner;
     });
     return qrCodeResult;

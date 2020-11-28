@@ -762,7 +762,6 @@ class _CollegeSectionPageState extends State<CollegeSectionPage> {
                                       projectDetailsList.forEach((element) {
                                         print(element);
                                       });
-                                      print('cardNo $cardNo');
                                       return BaseCard(
                                         type: cardNo,
                                         noOfPeopleparticipated: _currentStream

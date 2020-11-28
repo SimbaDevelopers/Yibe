@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:yibe_final_ui/helper/Constants.dart';
 import 'package:yibe_final_ui/model/user.dart';
 import 'package:yibe_final_ui/services/userdatabase.dart';
 
@@ -6,6 +7,7 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   UserDetails _userFromFireBaseUser(User user) {
+    Constants.uid = user.uid;
     return user != null ? UserDetails(uid: user.uid) : null;
   }
 

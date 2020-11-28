@@ -17,7 +17,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="33b2f30a-4efa-4781-9652-136b74f4d400" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/lib/services/growth_database.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/growth_database.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/f872507f30e2ff2523f0f1d19160266e.cache.dill.track.dill" beforeDir="false" afterPath="$PROJECT_DIR$/build/f872507f30e2ff2523f0f1d19160266e.cache.dill.track.dill" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/Money/lend.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/Money/lend.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/Money/summary.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/Money/summary.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/college_section_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/college_section_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/services/auth.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/auth.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/services/money_database.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/money_database.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +108,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606448316406</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Resume.dart..">
+      <created>1606448642711</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1606448642711</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -131,7 +145,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="All" />
     <MESSAGE value="Resume.dart" />
-    <option name="LAST_COMMIT_MESSAGE" value="Resume.dart" />
+    <MESSAGE value="Resume.dart.." />
+    <option name="LAST_COMMIT_MESSAGE" value="Resume.dart.." />
   </component>
   <component name="WindowStateProjectService">
     <state x="654" y="295" key="#Notifications" timestamp="1606211190919">
@@ -142,33 +157,33 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="663" y="305" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1606228798964" />
-    <state x="423" y="29" key="CommitChangelistDialog2" timestamp="1606448306634">
+    <state x="423" y="29" key="CommitChangelistDialog2" timestamp="1606448639564">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="423" y="29" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1606448306634" />
+    <state x="423" y="29" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1606448639564" />
     <state x="548" y="187" key="FileChooserDialogImpl" timestamp="1606388809678">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="548" y="187" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1606388809678" />
-    <state width="1491" height="271" key="GridCell.Tab.0.bottom" timestamp="1606446055615">
+    <state width="1491" height="126" key="GridCell.Tab.0.bottom" timestamp="1606556224710">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1491" height="271" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1606446055615" />
+    <state width="1491" height="126" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1606556224710" />
     <state width="1846" height="311" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1606321309246" />
-    <state width="1491" height="271" key="GridCell.Tab.0.center" timestamp="1606446055615">
+    <state width="1491" height="126" key="GridCell.Tab.0.center" timestamp="1606556224710">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1491" height="271" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1606446055615" />
+    <state width="1491" height="126" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1606556224710" />
     <state width="1846" height="311" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1606321309245" />
-    <state width="1491" height="271" key="GridCell.Tab.0.left" timestamp="1606446055614">
+    <state width="1491" height="126" key="GridCell.Tab.0.left" timestamp="1606556224710">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1491" height="271" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1606446055614" />
+    <state width="1491" height="126" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1606556224710" />
     <state width="1846" height="311" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1606321309245" />
-    <state width="1491" height="271" key="GridCell.Tab.0.right" timestamp="1606446055615">
+    <state width="1491" height="126" key="GridCell.Tab.0.right" timestamp="1606556224710">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1491" height="271" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1606446055615" />
+    <state width="1491" height="126" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1606556224710" />
     <state width="1846" height="311" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1606321309246" />
     <state x="147" y="69" key="MergeDialog" timestamp="1606448424281">
       <screen x="0" y="0" width="1536" height="864" />
@@ -183,10 +198,10 @@
     </state>
     <state x="277" y="77" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1606388905264" />
     <state x="346" y="93" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1606224107005" />
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1606448341289">
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1606448652207">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1606448341289" />
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1606448652207" />
     <state x="100" y="100" width="1720" height="840" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1606315108122">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

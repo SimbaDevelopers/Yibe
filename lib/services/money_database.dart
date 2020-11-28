@@ -5,7 +5,7 @@ class MoneyDatabaseService {
   MoneyDatabaseService({this.uid});
 
   final CollectionReference usersCollection =
-      FirebaseFirestore.instance.collection('users');
+      FirebaseFirestore.instance.collection('Users');
 
   Future<Map> getBorrowerDetails(String borrowerId) async {
     DocumentSnapshot doc = await usersCollection.doc(borrowerId).get();
