@@ -1,12 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:yibe_final_ui/helper/Constants.dart';
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:yibe_final_ui/helper/Constants.dart';
 
 class ResumeDatabase {
-  //var uid = Constants.uid;
   var uid = Constants.uid;
+  
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('Users');
 
@@ -43,7 +43,7 @@ class ResumeDatabase {
       String endDate,
       String description,
       File image) async {
-    print("expreience");
+        print("expreience");
     var images = '';
     final StorageReference firebaseStorageRef = FirebaseStorage.instance
         .ref()
@@ -56,11 +56,11 @@ class ResumeDatabase {
     if (uploadTask.isComplete) {
       String firebaseImageLink = downloadUrl.toString();
       images = firebaseImageLink;
-      print(images);
+       print(images);
     }
     var map = {
       "type": "experence",
-      "title": title,
+      "title":title,
       "company": company,
       "location": location,
       "startDate": startDate,
@@ -93,7 +93,7 @@ class ResumeDatabase {
     if (uploadTask.isComplete) {
       String firebaseImageLink = downloadUrl.toString();
       images = firebaseImageLink;
-      print(images);
+       print(images);
     }
     var map = {
       "type": "education",
@@ -144,58 +144,48 @@ class ResumeDatabase {
     return await usersCollection.doc(uid).collection('Resume').get();
   }
 
-  Future<QuerySnapshot> getUserDetail() async {
-    print(uid);
-    QuerySnapshot snapshot =
-        await usersCollection.doc(uid).collection('PersonalInfo').get();
-    if (snapshot.docs.length > 0) {
+
+  Future<QuerySnapshot> getUserDetail()async{
+      print(uid);
+     QuerySnapshot snapshot = await usersCollection.doc(uid).collection('PersonalInfo').get();
+      if (snapshot.docs.length > 0) {
       return snapshot;
     } else {
-      DocumentSnapshot userRef = await usersCollection.doc(uid).get();
+    DocumentSnapshot userRef =  await usersCollection.doc(uid).get();
       String email = userRef['emailId'];
       String id = userRef['userName'];
-
+    
       String userName = userRef['fullname'];
       print(userName);
       print(email);
       print(id);
-      Map<String, dynamic> map = {
-        'userName': userName,
+      Map<String,dynamic> map = {
+        'userName':userName,
         'organiserId': id,
-        'age': 'age',
-        'phone': 'phone',
-        'city': 'city',
-        'add': 'address',
+        'age':'age',
+        'phone':'phone',
+        'city':'city',
+        'add':'address',
         'email': email,
-        'linkedIn': 'linkedIn',
-        'twitter': 'twitter',
+        'linkedIn':'linkedIn',
+        'twitter':'twitter',
       };
-      await usersCollection.doc(uid).collection('PersonalInfo').add(map);
+      await usersCollection.doc(uid).collection('PersonalInfo').doc(uid).set(map);
       return await usersCollection.doc(uid).collection('PersonalInfo').get();
     }
   }
-
-  Future addPersonalDetail(
-      String userName,
-      String id,
-      String age,
-      String phone,
-      String city,
-      String address,
-      String email,
-      String linkedIn,
-      String twitter) async {
-    Map<String, dynamic> map = {
-      'userName': userName,
-      'organiserId': id,
-      'age': age,
-      'phone': phone,
-      'city': city,
-      'add': address,
-      'email': email,
-      'linkedIn': linkedIn,
-      'twitter': twitter,
-    };
-    await usersCollection.doc(uid).collection('PersonalInfo').add(map);
+  Future addPersonalDetail(String userName,String id,String age,String phone, String city ,String address ,String email ,String linkedIn,String twitter)async{
+Map<String,dynamic> map = {
+        'userName':userName,
+        'organiserId':id,
+        'age':age,
+        'phone':phone,
+        'city':city,
+        'add':address,
+        'email':email,
+        'linkedIn':linkedIn,
+        'twitter':twitter,
+      };
+      await usersCollection.doc(uid).collection('PersonalInfo').doc(uid).set(map);
   }
 }
