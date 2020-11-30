@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:yibe_final_ui/pages/viewOtherUserProfProfile.dart';
 import 'package:yibe_final_ui/services/database.dart';
+import 'package:yibe_final_ui/services/navigation_service.dart';
+import 'package:yibe_final_ui/services/snack_bar_service.dart';
 
 class MyProfFollowers extends StatefulWidget {
-
   @override
   _MyProfFollowersState createState() => _MyProfFollowersState();
 }
 
 class _MyProfFollowersState extends State<MyProfFollowers> {
+  static GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(46.0),
         child: AppBar(
@@ -25,7 +29,9 @@ class _MyProfFollowersState extends State<MyProfFollowers> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               print('in waiting of prof followers');
-              return Center(child: CircularProgressIndicator(),);
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             }
 
             if (snapshot.data == null || snapshot.data.documents.length == 0) {
@@ -33,25 +39,57 @@ class _MyProfFollowersState extends State<MyProfFollowers> {
             }
 
             var users = snapshot.data.documents;
-              return ListView.builder(
-                itemCount: users.length,
-                itemBuilder: (context, i) {
-                  return Column(
-                    children: [
-                      Divider(
-                        height: 10.0,
-                      ),
-                      ListTile(
+            return ListView.builder(
+              itemCount: users.length,
+              itemBuilder: (context, i) {
+                return Column(
+                  children: [
+                    Divider(
+                      height: 10.0,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        if (users[i].data()['uid'].toString().contains('-')) {
+                          DatabaseService.instance
+                              .getAnyProfUserInfo(users[i].data()['uid'])
+                              .then((value) => {
+                                    NavigationService.instance.pushTo(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ViewOtherUserProfProfile(
+                                                  navigatedFromPrivateAc: false,
+                                                  otherUserPvtUid:
+                                                      value['pvtId'],
+                                                  otherUserProfUid:
+                                                      value['profId'],
+                                                  otherUserBusinessName:
+                                                      value['BusinessName'],
+                                                  otherUserProfile:
+                                                      value['profUrl'],
+                                                  otherUserBio:
+                                                      value['BusinessBio'] ??
+                                                          'Bio is Empty',
+                                                  otherUserName:
+                                                      value['profUserName'],
+                                                )))
+                                  });
+                        } else {
+                          SnackBarService.instance.showSnackBar(_scaffoldKey,
+                              'You cannot view private user profile');
+                        }
+                      },
+                      child: ListTile(
                           title: Text(users[i].data()['name']),
                           leading: CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                users[i].data()['url']),
-                          ))
-                    ],
-                  );},
-              );
-            }
-          ),
+                            backgroundImage:
+                                NetworkImage(users[i].data()['url']),
+                          )),
+                    )
+                  ],
+                );
+              },
+            );
+          }),
     );
   }
 }

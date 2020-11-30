@@ -1,16 +1,20 @@
-import 'package:yibe_final_ui/utils/constants.dart';
-import 'package:yibe_final_ui/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:yibe_final_ui/model/connection.dart';
 import 'package:flutter/material.dart';
-import 'package:yibe_final_ui/pages/Share.dart';
-import 'package:yibe_final_ui/pages/comments.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:yibe_final_ui/model/connection.dart';
 import 'package:yibe_final_ui/pages/Message.dart';
 import 'package:yibe_final_ui/pages/Notification.dart';
+import 'package:yibe_final_ui/pages/Share.dart';
+import 'package:yibe_final_ui/pages/comments.dart';
+import 'package:yibe_final_ui/services/database.dart';
+import 'package:yibe_final_ui/utils/constants.dart';
+import 'package:yibe_final_ui/widget/custom_dialog_box.dart';
 
 class PrivateFeeds extends StatefulWidget {
+  String feedOf;
+  Stream feedStream;
+  PrivateFeeds({this.feedStream, this.feedOf});
 
   @override
   _PrivateFeedsState createState() => _PrivateFeedsState();
@@ -18,34 +22,21 @@ class PrivateFeeds extends StatefulWidget {
 
 class _PrivateFeedsState extends State<PrivateFeeds> {
   static NotificationModel likeInstance = NotificationModel();
-  Stream allCloseFriendFeeds;
-  Stream allFriendFeeds;
-  Stream allAcquaintanceFeeds;
-  Stream allPvtFollowingsFeeds;
-  Stream allFeeds;
-  int page = 0;
+  Stream allPvtFeeds;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    Stream<QuerySnapshot> closeFriendFeeds = DatabaseService.instance.getAllCloseFriendsFeeds();
-    Stream<QuerySnapshot> friendsFeeds = DatabaseService.instance.getAllFriendsFeeds();
-    Stream<QuerySnapshot> acquaintanceFeeds = DatabaseService.instance.getAllAcquaintanceFeeds();
-    Stream<QuerySnapshot> followingsFeeds = DatabaseService.instance.getAllPvtFollowingsFeeds();
-    Stream<QuerySnapshot> allPvtFeeds = DatabaseService.instance.getAllMyPvtFeeds();
+    print(widget.feedOf);
+    print(UniversalVariables.myPvtUid);
+    Stream<QuerySnapshot> pfs = DatabaseService.instance.getAllMyPvtFeeds();
     setState(() {
-      allCloseFriendFeeds= closeFriendFeeds;
-      allFriendFeeds = friendsFeeds;
-      allAcquaintanceFeeds = acquaintanceFeeds;
-      allPvtFollowingsFeeds = followingsFeeds;
-      allFeeds = allPvtFeeds;
+      allPvtFeeds = pfs;
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(46.0),
@@ -64,8 +55,8 @@ class _PrivateFeedsState extends State<PrivateFeeds> {
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                              return NotificationPage();
-                            }));
+                          return NotificationPage();
+                        }));
                       },
                       child: SvgPicture.asset(
                         "assets/images/notifications_none-24px 1.svg",
@@ -75,13 +66,24 @@ class _PrivateFeedsState extends State<PrivateFeeds> {
                     Spacer(),
                     GestureDetector(
                       onLongPress: () {
-                        //widget.hiberPopUp(true);
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => CustomDialog(
+                            title: "Hibernation Mode",
+                            description:
+                                "Only selected messages will be accessable. Other features of the application cannot be used during hibernation",
+                            primaryButtonText: "Activate",
+                            primaryButtonRoute: "hybernation",
+                            secondaryButtonText: "Cancel",
+                            secondaryButtonRoute: "pageHandler",
+                          ),
+                        );
                       },
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                              return Messages();
-                            }));
+                          return Messages();
+                        }));
                       },
                       child: Icon(Icons.send, size: 28, color: Colors.black),
                     ),
@@ -96,114 +98,28 @@ class _PrivateFeedsState extends State<PrivateFeeds> {
         ),
         body: ListView(children: [
           Container(
-            height: MediaQuery.of(context).size.height * 0.07,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      page = 0;
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'All',
-                      style:
-                      TextStyle(color: page==0 ? primaryColor : grey, fontSize: 20.0),
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      page = 1;
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Close Friends',
-                      style:
-                      TextStyle(color: page==1 ? primaryColor : grey, fontSize: 20.0),
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      page = 2;
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Friends',
-                      style: TextStyle(
-                          color: page==2 ? primaryColor : grey, fontSize: 20.0),
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      page = 3;
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Acquaintance',
-                      style: TextStyle(
-                          color: page==3 ? primaryColor : grey, fontSize: 20.0),
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      page = 4;
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Followings',
-                          style: TextStyle(
-                              color: page==4 ? primaryColor : grey, fontSize: 20.0),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Divider(
-            height: 5.0,
-            color: Colors.black,
-          ),
-          Container(
-              height: MediaQuery.of(context).size.height * 0.8,
-              child: page==0 ? listofallFeeds() : page==1 ? listofallCloseFriendFeeds() : page==2 ? listofallFriendsFeeds() : page==3 ? listofallAcquaintanceFeeds() : page==4 ? listofallPvtFollowingsFeeds() :  Container()
+            height: MediaQuery.of(context).size.height * 0.8,
+            child: widget.feedOf != null
+                ? listofSelectedFeeds()
+                : listofAllPvtFeeds(),
           ),
         ]));
   }
 
-  Widget listofallCloseFriendFeeds(){
+  Widget listofSelectedFeeds() {
     return StreamBuilder(
-        stream: allCloseFriendFeeds,
+        stream: widget.feedStream,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            print('in waiting of CF feeds');
-            return Center(child: Container(child: Text('loading...')));
+            print('in waiting of Pvt feeds');
+            return Center(child: Container(child: CircularProgressIndicator()));
           }
 
           if (snapshot.data == null || snapshot.data.documents.length == 0) {
-            return Center(child: Container(child: Text('No close friend feeds')));
+            return Center(
+                child: Container(
+                    child:
+                        Text('No feeds are posted by your ' + widget.feedOf)));
           }
           var posts = snapshot.data.documents;
           return Column(children: [
@@ -227,116 +143,13 @@ class _PrivateFeedsState extends State<PrivateFeeds> {
         });
   }
 
-  Widget listofallFriendsFeeds(){
+  Widget listofAllPvtFeeds() {
     return StreamBuilder(
-        stream: allFriendFeeds,
+        stream: allPvtFeeds,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            print('in waiting of F feeds');
-            return Center(child: Container(child: Text('loading...')));
-          }
-
-          if (snapshot.data == null || snapshot.data.documents.length == 0) {
-            return Center(child: Container(child: Text('No friend feeds')));
-          }
-          var posts = snapshot.data.documents;
-          return Column(children: [
-            Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: posts.length,
-                itemBuilder: (context, i) {
-                  return Column(
-                    children: [
-                      postTile(posts[i]),
-                      Divider(
-                        height: 10.0,
-                      ),
-                    ],
-                  );
-                },
-              ),
-            )
-          ]);
-        });
-  }
-
-
-  Widget listofallAcquaintanceFeeds(){
-    return StreamBuilder(
-        stream: allAcquaintanceFeeds,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            print('in waiting of AQ feed');
-            return Center(child: Container(child: Text('loading...')));
-          }
-
-          if (snapshot.data == null || snapshot.data.documents.length == 0) {
-            return Center(child: Container(child: Text('No acquaintance feeds')));
-          }
-          var posts = snapshot.data.documents;
-          return Column(children: [
-            Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: posts.length,
-                itemBuilder: (context, i) {
-                  return Column(
-                    children: [
-                      postTile(posts[i]),
-                      Divider(
-                        height: 10.0,
-                      ),
-                    ],
-                  );
-                },
-              ),
-            )
-          ]);
-        });
-  }
-
-  Widget listofallPvtFollowingsFeeds(){
-    return StreamBuilder(
-        stream: allPvtFollowingsFeeds,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            print('in waiting of following feeds');
-            return Center(child: Container(child: Text('loading...')));
-          }
-          if (snapshot.data == null || snapshot.data.documents.length == 0) {
-            return Center(child: Container(child: Text('No feeds')));
-          }
-          var posts = snapshot.data.documents;
-          return Column(children: [
-            Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: posts.length,
-                itemBuilder: (context, i) {
-                  return Column(
-                    children: [
-                      postTile(posts[i]),
-                      Divider(
-                        height: 10.0,
-                      ),
-                    ],
-                  );
-                },
-              ),
-            )
-          ]);
-        });
-  }
-
-
-  Widget listofallFeeds(){
-    return StreamBuilder(
-        stream: allFeeds,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            print('in waiting of all feeds');
-            return Center(child: Container(child: Text('Loading....')));
+            print('in waiting of Pvt feeds');
+            return Center(child: Container(child: CircularProgressIndicator()));
           }
 
           if (snapshot.data == null || snapshot.data.documents.length == 0) {
@@ -363,27 +176,30 @@ class _PrivateFeedsState extends State<PrivateFeeds> {
           ]);
         });
   }
-
 
   Widget postTile(QueryDocumentSnapshot post) {
-
-    void addMyLikeToAPost(String postFrom, String postFor, String postId, String postUrl, String image) async {
-      print('post url of liked feed');
-      print(postUrl);
-      await DatabaseService.instance.getPvtProfileUrlofAUser(UniversalVariables.myPvtUid).then((value) {
+    void addMyLikeToAPost(String postFrom, String postFor, String postId,
+        String postUrl, String image) async {
+      //print('post url of liked feed');
+      //print(postUrl);
+      await DatabaseService.instance
+          .getPvtProfileUrlofAUser(UniversalVariables.myPvtUid)
+          .then((value) {
         likeInstance = NotificationModel(
           type: 'Like',
           From: UniversalVariables.myPvtUid,
           fullname: UniversalVariables.myPvtFullName,
           username: UniversalVariables.myPvtUsername,
           timestamp: Timestamp.now(),
-          profileUrl: value!=null ? value : UniversalVariables.defaultImageUrl,
+          profileUrl:
+              value != null ? value : UniversalVariables.defaultImageUrl,
           To: postFrom,
           otherUserRelation: postFor != 'Follower' ? 'Connection' : 'Following',
         );
       });
       print(likeInstance.toMap(likeInstance));
-      await DatabaseService.instance.addLikeToAPostInMyPvtFeed(likeInstance.toMap(likeInstance), postId, postFrom, postFor, postUrl);
+      await DatabaseService.instance.addLikeToAPostInMyPvtFeed(
+          likeInstance.toMap(likeInstance), postId, postFrom, postFor, postUrl);
     }
 
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -391,7 +207,8 @@ class _PrivateFeedsState extends State<PrivateFeeds> {
         leading: CircleAvatar(
           backgroundImage: NetworkImage(post.data()['image']),
         ),
-        title: Text(post.data()['name'],
+        title: Text(
+          post.data()['name'],
           style: TextStyle(
             color: Colors.black,
             fontSize: 14.0,
@@ -399,10 +216,11 @@ class _PrivateFeedsState extends State<PrivateFeeds> {
             fontWeight: FontWeight.w400,
           ),
         ),
-        subtitle: Text(timeago
-        .format(DateTime.tryParse(
-       post.data()['timestamp'].toDate().toString()))
-        .toString(),
+        subtitle: Text(
+          timeago
+              .format(DateTime.tryParse(
+                  post.data()['timestamp'].toDate().toString()))
+              .toString(),
           style: TextStyle(
             color: Color(0xFfA7A7A7),
             fontSize: 14.0,
@@ -412,33 +230,33 @@ class _PrivateFeedsState extends State<PrivateFeeds> {
         ),
         trailing: GestureDetector(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context){
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return Share();
               }));
             },
             child: Icon(Icons.more_vert)),
       ),
-     post.data()["type"] == "image"
-          ?  Column(
-            children: [
+      post.data()["type"] == "image"
+          ? Column(children: [
               Container(
-        width: MediaQuery.of(context).size.width,
-        height: 300.0,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-              image: NetworkImage(post.data()["postUrl"]),
-              fit: BoxFit.cover,
-            ),
-        ),
-      ),
-    Padding(
-    padding: EdgeInsets.fromLTRB(16.0, 16.0, 0, 0),
-    child: Container(child: Text(post.data()["caption"]))),])
+                width: MediaQuery.of(context).size.width,
+                height: 300.0,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(post.data()["postUrl"]),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              Padding(
+                  padding: EdgeInsets.fromLTRB(16.0, 16.0, 0, 0),
+                  child: Container(child: Text(post.data()["caption"]))),
+            ])
           : Padding(
-          padding: EdgeInsets.fromLTRB(16.0, 0, 0, 0),
-          child: Container(child: Text(post.data()["postText"]))),
+              padding: EdgeInsets.fromLTRB(16.0, 0, 0, 0),
+              child: Container(child: Text(post.data()["postText"]))),
 
-     /* GestureDetector(
+      /* GestureDetector(
         onTap: (){
           print("hi");
         },
@@ -468,46 +286,66 @@ class _PrivateFeedsState extends State<PrivateFeeds> {
         child: Row(
           children: [
             SizedBox(width: 15.0),
-            post.data().containsKey('isLiked') && post.data()['isLiked']==true ? IconButton(icon: Icon(Icons.favorite),
-                onPressed: () {
-                  DatabaseService.instance.removeLikeFromAPostInMyPvtFeed(post.data()['postId'], post.data()['postFrom']);
-                }) : IconButton(
-              icon: Icon(Icons.favorite_border),
-              onPressed: (){
-                addMyLikeToAPost(post.data()['postFrom'], post.data()['postFor'], post.data()['postId'], post.data()['postUrl'], post.data()['image']);
-              },
-            ),
+            post.data().containsKey('isLiked') && post.data()['isLiked'] == true
+                ? IconButton(
+                    icon: Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                    ),
+                    onPressed: () {
+                      DatabaseService.instance.removeLikeFromAPostInMyPvtFeed(
+                          post.data()['postId'], post.data()['postFrom']);
+                    })
+                : IconButton(
+                    icon: Icon(Icons.favorite_border),
+                    onPressed: () {
+                      addMyLikeToAPost(
+                          post.data()['postFrom'],
+                          post.data()['postFor'],
+                          post.data()['postId'],
+                          post.data()['postUrl'],
+                          post.data()['image']);
+                    },
+                  ),
             SizedBox(width: 5.0),
             Container(
                 alignment: Alignment.bottomLeft,
                 child: Text(
-                  //widget.user["like"] + " Yibed",
-                  '34 Yibed',
+                  post.data().containsKey('isLiked') &&
+                          post.data()['isLiked'] == true
+                      ? '1 Yibed'
+                      : '0 Yibed',
                   style: TextStyle(fontSize: 12),
                 )),
             Spacer(),
             GestureDetector(
                 onTap: () {
-                 Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return Comment(
                       //isPrivate: true,
                       profileImage: post.data()['image'],
-                      likeCount: '34',
+                      likeCount: post.data().containsKey('isLiked') &&
+                              post.data()['isLiked'] == true
+                          ? '1'
+                          : '0',
                       name: post.data()['name'],
-                      time: timeago.format(DateTime.tryParse(post.data()['timestamp'].toDate().toString())).toString(),
+                      time: timeago
+                          .format(DateTime.tryParse(
+                              post.data()['timestamp'].toDate().toString()))
+                          .toString(),
                       type: post.data()['type'],
                       postImage: post.data()['postUrl'],
                       postText: post.data()['postText'],
-                      msg:post.data()['caption'],
+                      msg: post.data()['caption'],
                     );
                   }));
                 },
-                child: SvgPicture.asset('assets/images/message_icon_homePage.svg')),
-            SizedBox(width: 15.0),
+                child: SvgPicture.asset(
+                    'assets/images/message_icon_homePage.svg')),
             SizedBox(width: 15.0),
             GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return Share();
                   }));
                 },
@@ -517,7 +355,7 @@ class _PrivateFeedsState extends State<PrivateFeeds> {
         ),
       ),
       //SizedBox(height: 15.0),
-     /* widget.user["type"] == "embedded"
+      /* widget.user["type"] == "embedded"
           ? Container()
           : Padding(
           padding: EdgeInsets.fromLTRB(16.0, 0.0, 0.0, 0.0),
@@ -529,7 +367,7 @@ class _PrivateFeedsState extends State<PrivateFeeds> {
     ]);
 
     //TODO : Update profile pic of the user if changed after posting
-   return Container(
+    return Container(
       height: 500,
       width: 500,
       child: Card(
@@ -539,8 +377,7 @@ class _PrivateFeedsState extends State<PrivateFeeds> {
                 title: Text(post.data()['name']),
                 leading: CircleAvatar(
                   backgroundImage: NetworkImage(post.data()['image']),
-                )
-            ),
+                )),
             Container(
               height: 300.0,
               width: 320.0,
@@ -557,27 +394,46 @@ class _PrivateFeedsState extends State<PrivateFeeds> {
                 width: 300.0,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children:[
-                    post.data().containsKey('isLiked') && post.data()['isLiked']==true ? IconButton(icon: Icon(Icons.favorite),
-                        onPressed: () {
-                          DatabaseService.instance.removeLikeFromAPostInMyPvtFeed(post.data()['postId'], post.data()['postFrom']);
-                        }) : IconButton(
-                      icon: Icon(Icons.favorite_border),
-                      onPressed: (){
-                        addMyLikeToAPost(post.data()['postFrom'], post.data()['postFor'], post.data()['postId'], post.data()['postUrl'], post.data()['image']);
-                      },
-                    ),
+                  children: [
+                    post.data().containsKey('isLiked') &&
+                            post.data()['isLiked'] == true
+                        ? IconButton(
+                            icon: Icon(Icons.favorite),
+                            onPressed: () {
+                              DatabaseService.instance
+                                  .removeLikeFromAPostInMyPvtFeed(
+                                      post.data()['postId'],
+                                      post.data()['postFrom']);
+                            })
+                        : IconButton(
+                            icon: Icon(Icons.favorite_border),
+                            onPressed: () {
+                              addMyLikeToAPost(
+                                  post.data()['postFrom'],
+                                  post.data()['postFor'],
+                                  post.data()['postId'],
+                                  post.data()['postUrl'],
+                                  post.data()['image']);
+                            },
+                          ),
                     Row(
                       children: [
-                        Text(post.data()['name'], style: TextStyle(fontWeight: FontWeight.bold),),
-                        SizedBox(width: 5.0,),
+                        Text(
+                          post.data()['name'],
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          width: 5.0,
+                        ),
                         Text(post.data()['caption']),
                       ],
                     ),
-                    Text(timeago.format(DateTime.tryParse(post.data()['timestamp'].toDate().toString())).toString())
+                    Text(timeago
+                        .format(DateTime.tryParse(
+                            post.data()['timestamp'].toDate().toString()))
+                        .toString())
                   ],
-                )
-            ),
+                )),
           ],
         ),
       ),
