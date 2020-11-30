@@ -12,7 +12,6 @@ import 'package:yibe_final_ui/utils/constants.dart';
 import 'package:yibe_final_ui/widget/custom_dialog_box.dart';
 
 class ProfFeeds extends StatefulWidget {
-
   @override
   _ProfFeedsState createState() => _ProfFeedsState();
 }
@@ -22,7 +21,7 @@ class _ProfFeedsState extends State<ProfFeeds> {
   Stream ProfFollowingStream;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     Stream<QuerySnapshot> pfs = DatabaseService.instance.getAllMyProfFeeds();
     setState(() {
@@ -50,8 +49,8 @@ class _ProfFeedsState extends State<ProfFeeds> {
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                              return NotificationPage();
-                            }));
+                          return NotificationPage();
+                        }));
                       },
                       child: SvgPicture.asset(
                         "assets/images/notifications_none-24px 1.svg",
@@ -65,7 +64,8 @@ class _ProfFeedsState extends State<ProfFeeds> {
                           context: context,
                           builder: (BuildContext context) => CustomDialog(
                             title: "Hibernation Mode",
-                            description:  "Only selected messages will be accessable. Other features of the application cannot be used during hibernation",
+                            description:
+                                "Only selected messages will be accessable. Other features of the application cannot be used during hibernation",
                             primaryButtonText: "Activate",
                             primaryButtonRoute: "hybernation",
                             secondaryButtonText: "Cancel",
@@ -76,8 +76,8 @@ class _ProfFeedsState extends State<ProfFeeds> {
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                              return Messages();
-                            }));
+                          return Messages();
+                        }));
                       },
                       child: Icon(Icons.send, size: 28, color: Colors.black),
                     ),
@@ -98,7 +98,7 @@ class _ProfFeedsState extends State<ProfFeeds> {
         ]));
   }
 
-  Widget listofProfFeeds(){
+  Widget listofProfFeeds() {
     return StreamBuilder(
         stream: ProfFollowingStream,
         builder: (context, snapshot) {
@@ -108,7 +108,10 @@ class _ProfFeedsState extends State<ProfFeeds> {
           }
 
           if (snapshot.data == null || snapshot.data.documents.length == 0) {
-            return Center(child: Container(child: Text('No feeds are posted by your professional followings')));
+            return Center(
+                child: Container(
+                    child: Text(
+                        'No feeds are posted by your professional followings')));
           }
 
           var posts = snapshot.data.documents;
@@ -133,10 +136,9 @@ class _ProfFeedsState extends State<ProfFeeds> {
         });
   }
 
-
   Widget postTile(QueryDocumentSnapshot post) {
-
-    void addMyLikeToAPost(String postFrom, String postFor, String postId, String postUrl) async {
+    void addMyLikeToAPost(
+        String postFrom, String postFor, String postId, String postUrl) async {
       await DatabaseService.instance.getProfCurrentUserInfo().then((value) {
         likeInstance = NotificationModel(
           type: 'Like',
@@ -148,7 +150,12 @@ class _ProfFeedsState extends State<ProfFeeds> {
           otherUserRelation: 'Following',
           timestamp: Timestamp.now(),
         );
-        DatabaseService.instance.addLikeToAPostInMyProfFeed(likeInstance.toMap(likeInstance), postId, postFrom, postFor, postUrl);
+        DatabaseService.instance.addLikeToAPostInMyProfFeed(
+            likeInstance.toMap(likeInstance),
+            postId,
+            postFrom,
+            postFor,
+            postUrl);
       });
     }
 
@@ -157,7 +164,8 @@ class _ProfFeedsState extends State<ProfFeeds> {
         leading: CircleAvatar(
           backgroundImage: NetworkImage(post.data()['image']),
         ),
-        title: Text(post.data()['name'],
+        title: Text(
+          post.data()['name'],
           style: TextStyle(
             color: Colors.black,
             fontSize: 14.0,
@@ -165,10 +173,11 @@ class _ProfFeedsState extends State<ProfFeeds> {
             fontWeight: FontWeight.w400,
           ),
         ),
-        subtitle: Text(timeago
-            .format(DateTime.tryParse(
-            post.data()['timestamp'].toDate().toString()))
-            .toString(),
+        subtitle: Text(
+          timeago
+              .format(DateTime.tryParse(
+                  post.data()['timestamp'].toDate().toString()))
+              .toString(),
           style: TextStyle(
             color: Color(0xFfA7A7A7),
             fontSize: 14.0,
@@ -178,31 +187,31 @@ class _ProfFeedsState extends State<ProfFeeds> {
         ),
         trailing: GestureDetector(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context){
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return Share();
               }));
             },
             child: Icon(Icons.more_vert)),
       ),
       post.data()["type"] == "image"
-          ?  Column(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 300.0,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(post.data()["postUrl"]),
-                  fit: BoxFit.cover,
+          ? Column(children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 300.0,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(post.data()["postUrl"]),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-            Padding(
-                padding: EdgeInsets.fromLTRB(16.0, 16.0, 0, 0),
-                child: Container(child: Text(post.data()["caption"]))),])
+              Padding(
+                  padding: EdgeInsets.fromLTRB(16.0, 16.0, 0, 0),
+                  child: Container(child: Text(post.data()["caption"]))),
+            ])
           : Padding(
-          padding: EdgeInsets.fromLTRB(16.0, 0, 0, 0),
-          child: Container(child: Text(post.data()["postText"]))),
+              padding: EdgeInsets.fromLTRB(16.0, 0, 0, 0),
+              child: Container(child: Text(post.data()["postText"]))),
 
       /* GestureDetector(
         onTap: (){
@@ -234,20 +243,34 @@ class _ProfFeedsState extends State<ProfFeeds> {
         child: Row(
           children: [
             SizedBox(width: 15.0),
-            post.data().containsKey('isLiked') && post.data()['isLiked']==true ? IconButton(icon: Icon(Icons.favorite, color: Colors.red,),
-                onPressed: () {
-                  DatabaseService.instance.removeLikeFromAPostInMyProfFeed(post.data()['postId'], post.data()['postFrom']);
-                }) : IconButton(
-              icon: Icon(Icons.favorite_border),
-              onPressed: (){
-                addMyLikeToAPost(post.data()['postFrom'], post.data()['postFor'], post.data()['postId'], post.data()['postUrl']);
-              },
-            ),
+            post.data().containsKey('isLiked') && post.data()['isLiked'] == true
+                ? IconButton(
+                    icon: Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                    ),
+                    onPressed: () {
+                      DatabaseService.instance.removeLikeFromAPostInMyProfFeed(
+                          post.data()['postId'], post.data()['postFrom']);
+                    })
+                : IconButton(
+                    icon: Icon(Icons.favorite_border),
+                    onPressed: () {
+                      addMyLikeToAPost(
+                          post.data()['postFrom'],
+                          post.data()['postFor'],
+                          post.data()['postId'],
+                          post.data()['postUrl']);
+                    },
+                  ),
             SizedBox(width: 5.0),
             Container(
                 alignment: Alignment.bottomLeft,
                 child: Text(
-                  post.data().containsKey('isLiked') && post.data()['isLiked']==true ? '1 Yibed' : '0 Yibed',
+                  post.data().containsKey('isLiked') &&
+                          post.data()['isLiked'] == true
+                      ? '1 Yibed'
+                      : '0 Yibed',
                   style: TextStyle(fontSize: 12),
                 )),
             Spacer(),
@@ -257,22 +280,29 @@ class _ProfFeedsState extends State<ProfFeeds> {
                     return Comment(
                       //isPrivate: true,
                       profileImage: post.data()['image'],
-                      likeCount: post.data().containsKey('isLiked') && post.data()['isLiked']==true ? '1' : '0',
+                      likeCount: post.data().containsKey('isLiked') &&
+                              post.data()['isLiked'] == true
+                          ? '1'
+                          : '0',
                       name: post.data()['name'],
-                      time: timeago.format(DateTime.tryParse(post.data()['timestamp'].toDate().toString())).toString(),
+                      time: timeago
+                          .format(DateTime.tryParse(
+                              post.data()['timestamp'].toDate().toString()))
+                          .toString(),
                       type: post.data()['type'],
                       postImage: post.data()['postUrl'],
                       postText: post.data()['postText'],
-                      msg:post.data()['caption'],
+                      msg: post.data()['caption'],
                     );
                   }));
                 },
-                child: SvgPicture.asset('assets/images/message_icon_homePage.svg')),
+                child: SvgPicture.asset(
+                    'assets/images/message_icon_homePage.svg')),
             SizedBox(width: 15.0),
             SizedBox(width: 15.0),
             GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return Share();
                   }));
                 },
@@ -292,6 +322,5 @@ class _ProfFeedsState extends State<ProfFeeds> {
         thickness: 1.0,
       ),
     ]);
-
   }
 }

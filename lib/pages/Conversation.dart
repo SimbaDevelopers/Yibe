@@ -24,20 +24,26 @@ class ConversationPage extends StatefulWidget {
   final String typeOfConversation;
 
   ConversationPage(
-      {this.navigatedFromPrivateAc, this.otherUserName, this.chatRoomId, this.otherUserUid, this.otherUserFullName, this.otherUserProfileUrl, this.typeOfConversation});
+      {this.navigatedFromPrivateAc,
+      this.otherUserName,
+      this.chatRoomId,
+      this.otherUserUid,
+      this.otherUserFullName,
+      this.otherUserProfileUrl,
+      this.typeOfConversation});
 
   @override
   _ConversationPageState createState() => _ConversationPageState();
 }
 
 class _ConversationPageState extends State<ConversationPage> {
-  final TextEditingController messageEditingController = TextEditingController();
+  final TextEditingController messageEditingController =
+      TextEditingController();
   String currentMsg;
   static double _deviceHeight;
   static double _deviceWidth;
   static String _imageUrl;
   File _mediaImage;
-
 
   @override
   void initState() {
@@ -60,9 +66,9 @@ class _ConversationPageState extends State<ConversationPage> {
       await showDialog(
           barrierDismissible: false,
           context: context,
-          builder: (context) =>
-              AlertDialog(
-                title: Text(widget.otherUserFullName + ' wants to start a conversation with you.'),
+          builder: (context) => AlertDialog(
+                title: Text(widget.otherUserFullName +
+                    ' wants to start a conversation with you.'),
                 content: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -71,8 +77,9 @@ class _ConversationPageState extends State<ConversationPage> {
                         color: Colors.green,
                         onPressed: () async {
                           widget.navigatedFromPrivateAc
-                              ? null : await DatabaseService.instance.moveProfRMToDM(
-                              widget.otherUserUid);
+                              ? null
+                              : await DatabaseService.instance
+                                  .moveProfRMToDM(widget.otherUserUid);
                           NavigationService.instance.goBack();
                         },
                       ),
@@ -82,11 +89,9 @@ class _ConversationPageState extends State<ConversationPage> {
                           onPressed: () {
                             NavigationService.instance.goBack();
                             NavigationService.instance.goBack();
-                          }
-                      ),
+                          }),
                     ]),
-              )
-      );
+              ));
     });
   }
 
@@ -107,227 +112,216 @@ class _ConversationPageState extends State<ConversationPage> {
                         _mediaImage = _image;
                       });
                       sendImageToCloud();
-                    }
-                ),
+                    }),
                 ListTile(
                     leading: Icon(
-                      Icons.add_photo_alternate, color: primaryColor,),
+                      Icons.add_photo_alternate,
+                      color: primaryColor,
+                    ),
                     hoverColor: primaryColor,
                     title: Text('Gallery'),
                     onTap: () async {
-                      File _image = await MediaService.instance
-                          .getGalleryImage();
+                      File _image =
+                          await MediaService.instance.getGalleryImage();
                       setState(() {
                         _mediaImage = _image;
                       });
                       sendImageToCloud();
-                    }
-                ),
+                    }),
               ],
             ),
           );
-        }
-    );
+        });
   }
 
   void sendImageToCloud() async {
-    await StorageService.instance.uploadMessageTypeImage(
-        _mediaImage, UniversalVariables.myProfUid).then((val) =>
-        setState(() {
-          _imageUrl = val;
-          if (_imageUrl != null) {
-            DatabaseService.instance.sendMessage(
-              widget.chatRoomId, Message(
-                content: _imageUrl,
-                timestamp: Timestamp.now(),
-                senderId: widget.navigatedFromPrivateAc ? UniversalVariables
-                    .myPvtUid : UniversalVariables.myProfUid,
-                type: MessageType.Image),
-            );
-          }
-          else {
-            print('Empty image');
-          }
-        })).whenComplete(() =>
-        print('Image sent to cloud firestore successfully'));
+    await StorageService.instance
+        .uploadMessageTypeImage(_mediaImage, UniversalVariables.myProfUid)
+        .then((val) => setState(() {
+              _imageUrl = val;
+              if (_imageUrl != null) {
+                DatabaseService.instance.sendMessage(
+                  widget.chatRoomId,
+                  Message(
+                      content: _imageUrl,
+                      timestamp: Timestamp.now(),
+                      senderId: widget.navigatedFromPrivateAc
+                          ? UniversalVariables.myPvtUid
+                          : UniversalVariables.myProfUid,
+                      type: MessageType.Image),
+                );
+              } else {
+                print('Empty image');
+              }
+            }))
+        .whenComplete(
+            () => print('Image sent to cloud firestore successfully'));
   }
 
   @override
   Widget build(BuildContext context) {
-    _deviceHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
-    _deviceWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
+    _deviceHeight = MediaQuery.of(context).size.height;
+    _deviceWidth = MediaQuery.of(context).size.width;
 
     return SafeArea(
         child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Color(0xFFFFFFFF),
-            actions: <Widget>[
-              Container(
-                color: Colors.white,
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    SizedBox(
-                      width: 20,
-                    ),
-                    InkWell(
-                      onTap: () => NavigationService.instance.goBack(),
-                      child: SvgPicture.asset(
-                        'assets/images/back_btn.svg',
-                        // width: 31.0,
-                        height: 16.0,
-                      ),
-                    ),
-                    Spacer(),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        CircleAvatar(
-                          backgroundImage: NetworkImage(widget.otherUserProfileUrl),
-                          radius: 20,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        //   Image.asset(widget.image),
-                        Text(
-                          widget.otherUserFullName,
-                          style: TextStyle(fontSize: 20.0, color: Colors.black),
-                        )
-                      ],
-                    ),
-                    Spacer(),
-                    GestureDetector(
-                      // onLongPress: () {
-                      //   widget.hiberPopUp(true);
-                      // },
-                      onTap: () {
-                        // Navigator.push(context, MaterialPageRoute(builder: (context){
-                        //   return Messages();
-                        // }));
-                      },
-                      child: SizedBox(
-                        height: 30,
-                        width: 30,
-                      ),
+      appBar: AppBar(
+        backgroundColor: Color(0xFFFFFFFF),
+        actions: <Widget>[
+          Container(
+            color: Colors.white,
+            width: MediaQuery.of(context).size.width,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                SizedBox(
+                  width: 20,
+                ),
+                InkWell(
+                  onTap: () => NavigationService.instance.goBack(),
+                  child: SvgPicture.asset(
+                    'assets/images/back_btn.svg',
+                    // width: 31.0,
+                    height: 16.0,
+                  ),
+                ),
+                Spacer(),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(widget.otherUserProfileUrl),
+                      radius: 20,
                     ),
                     SizedBox(
-                      width: 20,
+                      width: 10,
+                    ),
+                    //   Image.asset(widget.image),
+                    Text(
+                      widget.otherUserFullName,
+                      style: TextStyle(fontSize: 20.0, color: Colors.black),
                     )
                   ],
                 ),
-              )
+                Spacer(),
+                GestureDetector(
+                  // onLongPress: () {
+                  //   widget.hiberPopUp(true);
+                  // },
+                  onTap: () {
+                    // Navigator.push(context, MaterialPageRoute(builder: (context){
+                    //   return Messages();
+                    // }));
+                  },
+                  child: SizedBox(
+                    height: 30,
+                    width: 30,
+                  ),
+                ),
+                SizedBox(
+                  width: 20,
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+      body: Container(
+          child: Stack(children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 40.0),
+          child: Column(
+            children: [
+              chats(),
             ],
           ),
-          body: Container(
-              child: Stack(children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 40.0),
-                  child: Column(
-                    children: [
-                      chats(),
-                    ],
+        ),
+        Container(
+          alignment: Alignment.bottomCenter,
+          width: MediaQuery.of(context).size.width,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              height: 50,
+              width: MediaQuery.of(context).size.width * 1,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    blurRadius: 4.0,
                   ),
-                ),
-                Container(
-                  alignment: Alignment.bottomCenter,
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
+                ],
+
+                color: Colors.white,
+                // border: Border.all(
+                //   color: Color(0xff008294),
+                //   width: 1.0,
+                // ),
+
+                borderRadius: BorderRadius.circular(50.0),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 0, vertical: 1),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    child: SvgPicture.asset(
+                      "assets/images/camera.svg",
+                      width: 30,
                       height: 50,
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width * 1,
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 4.0,
+                    ),
+                    onTap: () => MediabottomSheet(context),
+                  ),
+                  SizedBox(
+                    width: 10.0,
+                  ),
+                  Expanded(
+                    child: TextField(
+                      controller: messageEditingController,
+                      onChanged: (String msg) {
+                        currentMsg = msg;
+                      },
+                      // style: simpleTextStyle(),
+                      decoration: InputDecoration(
+                          hintText: "Message ...",
+                          hintStyle: TextStyle(
+                            color: Color(0xFFA7A7A7),
+                            fontSize: 16,
                           ),
-                        ],
-
-                        color: Colors.white,
-                        // border: Border.all(
-                        //   color: Color(0xff008294),
-                        //   width: 1.0,
-                        // ),
-
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
-                      padding: EdgeInsets.symmetric(horizontal: 0, vertical: 1),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            child: SvgPicture.asset(
-                              "assets/images/camera.svg",
-                              width: 30,
-                              height: 50,
-                            ),
-                            onTap: () => MediabottomSheet(context),
-                          ),
-                          SizedBox(
-                            width: 10.0,
-                          ),
-                          Expanded(
-                            child: TextField(
-                              controller: messageEditingController,
-                              onChanged: (String msg){
-                                currentMsg=msg;
-                              },
-                              // style: simpleTextStyle(),
-                              decoration: InputDecoration(
-                                  hintText: "Message ...",
-                                  hintStyle: TextStyle(
-                                    color: Color(0xFFA7A7A7),
-                                    fontSize: 16,
-                                  ),
-                                  border: InputBorder.none),
-                            ),
-                          ),
-                          GestureDetector(
-                              child: Container(child: Icon(Icons.send),
-                                width: 30,
-                                height: 50,
-                              ),
-                              onTap: ()async{
-                                if(currentMsg.trim().isEmpty)
-                                {print('Message is Empty');
-                                } else{
-                                  await DatabaseService.instance.sendMessage(
-                                    widget.chatRoomId, Message(
-                                      content: currentMsg.toString(),
-                                      timestamp: Timestamp.now(),
-                                      senderId: widget.navigatedFromPrivateAc ? UniversalVariables.myPvtUid : UniversalVariables.myProfUid,
-                                      type: MessageType.Text),
-                                  );
-                                  messageEditingController.clear();
-                                }}
-                          ),
-                        ],
-                      ),
+                          border: InputBorder.none),
                     ),
                   ),
-                ),
-              ])),
-        ));
+                  GestureDetector(
+                      child: Container(
+                        child: Icon(Icons.send),
+                        width: 30,
+                        height: 50,
+                      ),
+                      onTap: () async {
+                        if (currentMsg.trim().isEmpty) {
+                          print('Message is Empty');
+                        } else {
+                          await DatabaseService.instance.sendMessage(
+                            widget.chatRoomId,
+                            Message(
+                                content: currentMsg.toString(),
+                                timestamp: Timestamp.now(),
+                                senderId: widget.navigatedFromPrivateAc
+                                    ? UniversalVariables.myPvtUid
+                                    : UniversalVariables.myProfUid,
+                                type: MessageType.Text),
+                          );
+                          messageEditingController.clear();
+                        }
+                      }),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ])),
+    ));
   }
-
 
   Widget _messageListViewChild(bool _isOwnMessage, Message _message) {
     return Padding(
@@ -336,37 +330,39 @@ class _ConversationPageState extends State<ConversationPage> {
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment:
-        _isOwnMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
+            _isOwnMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: <Widget>[
           _message.type == MessageType.Text
               ? _textMessageBubble(
-              _isOwnMessage, _message.content, _message.timestamp)
+                  _isOwnMessage, _message.content, _message.timestamp)
               : _imageMessageBubble(
-              _isOwnMessage, _message.content, _message.timestamp),
+                  _isOwnMessage, _message.content, _message.timestamp),
         ],
       ),
     );
   }
 
-  Widget _textMessageBubble(bool _isOwnMessage, String _message,
-      Timestamp _timestamp) {
+  Widget _textMessageBubble(
+      bool _isOwnMessage, String _message, Timestamp _timestamp) {
     return Container(
       height: _deviceHeight * 0.08 + (_message.length / 20 * 5.0),
       width: _deviceWidth * 0.75,
       padding: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
-        borderRadius: _isOwnMessage ?
-        BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-            bottomLeft: Radius.circular(20))
+        borderRadius: _isOwnMessage
+            ? BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+                bottomLeft: Radius.circular(20))
             : BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-            bottomRight: Radius.circular(20)),
-        color: _isOwnMessage ? widget.navigatedFromPrivateAc
-            ? Color(0xff0CB5BB)
-            : Color(0xFF908EE1) : Color(0xFFDBDBDB),
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+                bottomRight: Radius.circular(20)),
+        color: _isOwnMessage
+            ? widget.navigatedFromPrivateAc
+                ? Color(0xff0CB5BB)
+                : Color(0xFF908EE1)
+            : Color(0xFFDBDBDB),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -375,7 +371,8 @@ class _ConversationPageState extends State<ConversationPage> {
         children: <Widget>[
           Text(_message),
           Text(
-            timeago.format(DateTime.tryParse(_timestamp.toDate().toString()))
+            timeago
+                .format(DateTime.tryParse(_timestamp.toDate().toString()))
                 .toString(),
             style: TextStyle(color: grey),
           ),
@@ -384,27 +381,30 @@ class _ConversationPageState extends State<ConversationPage> {
     );
   }
 
-  Widget _imageMessageBubble(bool _isOwnMessage, String _imageUrl,
-      Timestamp _timestamp) {
-    DecorationImage _image =
-    DecorationImage(
-        image: _imageUrl != null ? NetworkImage(_imageUrl) : UniversalVariables
-            .loadingImage, fit: BoxFit.cover);
+  Widget _imageMessageBubble(
+      bool _isOwnMessage, String _imageUrl, Timestamp _timestamp) {
+    DecorationImage _image = DecorationImage(
+        image: _imageUrl != null
+            ? NetworkImage(_imageUrl)
+            : UniversalVariables.loadingImage,
+        fit: BoxFit.cover);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
-        borderRadius: _isOwnMessage ?
-        BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-            bottomLeft: Radius.circular(20))
+        borderRadius: _isOwnMessage
+            ? BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+                bottomLeft: Radius.circular(20))
             : BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-            bottomRight: Radius.circular(20)),
-        color: _isOwnMessage ? widget.navigatedFromPrivateAc
-            ? Color(0xff0CB5BB)
-            : Color(0xFF908EE1) : Color(0xFFDBDBDB),
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+                bottomRight: Radius.circular(20)),
+        color: _isOwnMessage
+            ? widget.navigatedFromPrivateAc
+                ? Color(0xff0CB5BB)
+                : Color(0xFF908EE1)
+            : Color(0xFFDBDBDB),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -436,8 +436,7 @@ class _ConversationPageState extends State<ConversationPage> {
             builder: (context, snapshot) {
               Timer(
                 Duration(milliseconds: 50),
-                    () =>
-                    controller.jumpTo(controller.position.maxScrollExtent),
+                () => controller.jumpTo(controller.position.maxScrollExtent),
               );
               if (snapshot.hasData) {
                 var conversationEss = snapshot.data;
